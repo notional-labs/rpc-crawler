@@ -33,5 +33,6 @@ rpc-crawler https://notionalapi.com/cosmos
 This software is nice and complete but:
 * I'd like to add a check to the status endpoint so that we can also see the range of blocks available on each node.
 * chain registry support could be interesting
+* search for open grpc endpoints
 
 
