@@ -12,7 +12,14 @@ import (
 	"github.com/notional-labs/rpc-crawler/types"
 )
 
-var client = &http.Client{Timeout: 20000 * time.Millisecond}
+var client = &http.Client{
+	Timeout: 300 * time.Millisecond,
+	Transport: &http.Transport{
+		MaxIdleConns:        500,
+		IdleConnTimeout:     90 * time.Second,
+		MaxIdleConnsPerHost: 500,
+	},
+}
 
 var visited = struct {
 	sync.RWMutex
@@ -67,6 +74,23 @@ func ProcessPeer(peer *types.Peer) {
 	rpcAddr := BuildRPCAddress(peer)
 	rpcAddr = NormalizeAddressWithRemoteIP(rpcAddr, peer.RemoteIP)
 	CheckNode("http://" + rpcAddr)
+
+	// Fetch network info
+	netInfo, err := FetchNetInfo("http://" + rpcAddr)
+	if err != nil {
+		//		fmt.Println("Error fetching network info:", err)
+		return
+	}
+
+	// Process each peer
+	for _, peer := range netInfo.Result.Peers {
+		go func(peer types.Peer) {
+			if !IsNodeVisited(peer.NodeInfo.Other.RPCAddress) {
+				MarkNodeAsVisited(peer.NodeInfo.Other.RPCAddress)
+				ProcessPeer(&peer)
+			}
+		}(peer)
+	}
 }
 
 func FetchNetInfo(nodeAddr string) (*types.NetInfoResponse, error) {

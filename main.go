@@ -8,7 +8,7 @@ import (
 
 func main() {
 	initialNode := "http://localhost:26657"
-	if len(os.Args) > 0 {
+	if len(os.Args) > 1 {
 		initialNode = os.Args[1]
 	}
 

@@ -53,7 +53,6 @@ func CheckNode(nodeAddr string) {
 	totalNodesChecked++
 
 	netinfo, err := FetchNetInfo(nodeAddr)
-	fmt.Println(err)
 	if err == nil {
 		fmt.Println("Got net info from", nodeAddr)
 
@@ -72,7 +71,6 @@ func CheckNode(nodeAddr string) {
 		// Record the earliest block height
 		earliestBlockHeight, err := strconv.Atoi(status.Result.SyncInfo.EarliestBlockHeight)
 		if err != nil {
-			fmt.Println(err)
 			return
 		}
 		// Add to successful nodes
