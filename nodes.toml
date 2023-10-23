@@ -4,12 +4,12 @@ node = "https://cosmos-rpc.polkachu.com"
 totalNodesChecked = 1
 
 successfulNodes = {
-    "0": "https://cosmos-rpc.polkachu.com",
 }
 
-unsuccessfulNodes = {
-}
+unsuccessfulNodes = [
+    "https://cosmos-rpc.polkachu.com",
+]
 
-archiveNodes = {
-}
+archiveNodes = [
+]
 

@@ -21,8 +21,8 @@ type StatusResponse struct {
 			Network string `json:"network"`
 		} `json:"node_info"`
 		SyncInfo struct {
-			EarliestBlockHeight int `json:"earliest_block_height"`
-			LatestBlockHeight   int `json:"latest_block_height"`
+			EarliestBlockHeight string `json:"earliest_block_height"`
+			LatestBlockHeight   string `json:"latest_block_height"`
 		} `json:"sync_info"`
 	} `json:"result"`
 }

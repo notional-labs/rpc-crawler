@@ -12,7 +12,7 @@ import (
 	"github.com/notional-labs/rpc-crawler/types"
 )
 
-var client = &http.Client{Timeout: 1000 * time.Millisecond}
+var client = &http.Client{Timeout: 20000 * time.Millisecond}
 
 var visited = struct {
 	sync.RWMutex
@@ -32,7 +32,6 @@ func FetchStatus(nodeAddr string) (*types.StatusResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	return &status, nil
 }
 
