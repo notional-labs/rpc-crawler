@@ -133,7 +133,7 @@ func buildRPCAddress(peer *Peer) string {
 	if strings.HasPrefix(rpcAddr, "tcp://") {
 		rpcAddr = strings.TrimPrefix(rpcAddr, "tcp://")
 	}
-	if rpcAddr[:9] == "0.0.0.0:" || rpcAddr[:9] == "127.0.0.1:" {
+	if len(rpcAddr) >= 9 && (rpcAddr[:9] == "0.0.0.0:" || rpcAddr[:9] == "127.0.0.1:") {
 		rpcAddr = peer.RemoteIP + rpcAddr[8:]
 	}
 	return rpcAddr
