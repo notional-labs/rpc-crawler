@@ -1,4 +1,4 @@
-package main
+package types
 
 type Peer struct {
 	NodeInfo struct {
@@ -17,9 +17,12 @@ type NetInfoResponse struct {
 
 type StatusResponse struct {
 	Result struct {
+		NodeInfo struct {
+			Network string `json:"network"`
+		} `json:"node_info"`
 		SyncInfo struct {
-			EarliestBlockHeight string `json:"earliest_block_height"`
-			LatestBlockHeight   string `json:"latest_block_height"`
+			EarliestBlockHeight int `json:"earliest_block_height"`
+			LatestBlockHeight   int `json:"latest_block_height"`
 		} `json:"sync_info"`
 	} `json:"result"`
 }
