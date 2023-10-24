@@ -73,7 +73,6 @@ func WriteSectionToToml(file *os.File, sectionName string, nodes map[string]int)
 func ProcessPeer(peer *types.Peer) {
 	rpcAddr := BuildRPCAddress(peer)
 	rpcAddr = NormalizeAddressWithRemoteIP(rpcAddr, peer.RemoteIP)
-	fmt.Println(rpcAddr)
 	CheckNode("http://" + rpcAddr)
 
 	// Fetch network info

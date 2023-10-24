@@ -68,7 +68,7 @@ func CheckNode(nodeAddr string) {
 		status, err := FetchStatus(nodeAddr)
 		if err != nil {
 			fmt.Println("Failed to fetch status from", nodeAddr)
-
+			return
 		}
 
 		// Verify chain_id
