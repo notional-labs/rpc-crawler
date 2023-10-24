@@ -73,6 +73,7 @@ func WriteSectionToToml(file *os.File, sectionName string, nodes map[string]int)
 func ProcessPeer(peer *types.Peer) {
 	rpcAddr := BuildRPCAddress(peer)
 	rpcAddr = NormalizeAddressWithRemoteIP(rpcAddr, peer.RemoteIP)
+	fmt.Println(rpcAddr)
 	CheckNode("http://" + rpcAddr)
 
 	// Fetch network info
@@ -104,6 +105,16 @@ func FetchNetInfo(nodeAddr string) (*types.NetInfoResponse, error) {
 	var netInfo types.NetInfoResponse
 	err = json.NewDecoder(resp.Body).Decode(&netInfo)
 	return &netInfo, err
+}
+
+func FetchNodeInfoAPI(nodeAddr string) error {
+	url := nodeAddr + "/cosmos/base/tendermint/v1beta1/node_info"
+	resp, err := HttpGet(url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	return err
 }
 
 func NormalizeAddressWithRemoteIP(nodeAddr string, remoteIP string) string {
@@ -152,6 +163,10 @@ func WriteNodesToToml(initialNode string) {
 	WriteSectionToToml(file, "successfulNodes", successfulNodes.nodes)
 	WriteSectionToTomlSlice(file, "unsuccessfulNodes", unsuccessfulNodes.nodes)
 	WriteSectionToTomlSlice(file, "archiveNodes", archiveNodes.nodes)
+
+	// Write sections to the file
+	WriteSectionToTomlSlice(file, "successfulNodesAPI", successfulNodesAPI.nodes)
+	WriteSectionToTomlSlice(file, "unsuccessfulNodesAPI", unsuccessfulNodesAPI.nodes)
 
 	fmt.Println(".toml file created with node details.")
 }
