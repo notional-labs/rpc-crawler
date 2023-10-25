@@ -2,7 +2,6 @@ package lib
 
 import (
 	"context"
-	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -15,14 +14,13 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/notional-labs/rpc-crawler/types"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials"
 )
 
 var client = &http.Client{
-	Timeout: 300 * time.Millisecond,
+	Timeout: 3000 * time.Millisecond,
 	Transport: &http.Transport{
 		MaxIdleConns:        500,
-		IdleConnTimeout:     90 * time.Second,
+		IdleConnTimeout:     30 * time.Second,
 		MaxIdleConnsPerHost: 500,
 	},
 }
@@ -100,12 +98,9 @@ func ProcessPeer(peer *types.Peer) {
 }
 
 func FetchNodeInfoGRPC(nodeAddr string) error {
-	tlsCfg := &tls.Config{
-		InsecureSkipVerify: true,
-	}
 	grpcConn, err := grpc.Dial(
 		nodeAddr,
-		grpc.WithTransportCredentials(credentials.NewTLS(tlsCfg)), // The Cosmos SDK doesn't support any transport security mechanism.
+		grpc.WithInsecure(), // The Cosmos SDK doesn't support any transport security mechanism.
 		// This instantiates a general gRPC codec which handles proto bytes. We pass in a nil interface registry
 		// if the request/response types contain interface instead of 'nil' you should pass the application specific codec.
 		grpc.WithDefaultCallOptions(grpc.ForceCodec(codec.NewProtoCodec(nil).GRPCCodec())),
