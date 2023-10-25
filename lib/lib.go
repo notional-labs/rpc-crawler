@@ -1,6 +1,8 @@
 package lib
 
 import (
+	"context"
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -9,7 +11,11 @@ import (
 	"sync"
 	"time"
 
+	"github.com/cosmos/cosmos-sdk/client/grpc/tmservice"
+	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/notional-labs/rpc-crawler/types"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 )
 
 var client = &http.Client{
@@ -93,6 +99,37 @@ func ProcessPeer(peer *types.Peer) {
 	}
 }
 
+func FetchNodeInfoGRPC(nodeAddr string) error {
+	tlsCfg := &tls.Config{
+		InsecureSkipVerify: true,
+	}
+	grpcConn, err := grpc.Dial(
+		nodeAddr,
+		grpc.WithTransportCredentials(credentials.NewTLS(tlsCfg)), // The Cosmos SDK doesn't support any transport security mechanism.
+		// This instantiates a general gRPC codec which handles proto bytes. We pass in a nil interface registry
+		// if the request/response types contain interface instead of 'nil' you should pass the application specific codec.
+		grpc.WithDefaultCallOptions(grpc.ForceCodec(codec.NewProtoCodec(nil).GRPCCodec())),
+	)
+	if err != nil {
+		return err
+	}
+
+	defer grpcConn.Close()
+
+	serviceClient := tmservice.NewServiceClient(grpcConn)
+	nodeInfoRes, err := serviceClient.GetNodeInfo(
+		context.Background(),
+		&tmservice.GetNodeInfoRequest{},
+	)
+
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+	fmt.Println(nodeInfoRes)
+	return err
+}
+
 func FetchNetInfo(nodeAddr string) (*types.NetInfoResponse, error) {
 	url := nodeAddr + "/net_info"
 	resp, err := HttpGet(url)
@@ -152,6 +189,10 @@ func WriteNodesToToml(initialNode string) {
 	WriteSectionToToml(file, "successfulNodes", successfulNodes.nodes)
 	WriteSectionToTomlSlice(file, "unsuccessfulNodes", unsuccessfulNodes.nodes)
 	WriteSectionToTomlSlice(file, "archiveNodes", archiveNodes.nodes)
+
+	// Write sections to the file
+	WriteSectionToTomlSlice(file, "successfulNodesGRPC", successfulNodesGRPC.nodes)
+	WriteSectionToTomlSlice(file, "unsuccessfulNodesGRPC", unsuccessfulNodesGRPC.nodes)
 
 	fmt.Println(".toml file created with node details.")
 }
