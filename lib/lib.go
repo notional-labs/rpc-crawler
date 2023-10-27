@@ -12,6 +12,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
+	coretypes "github.com/cometbft/cometbft/rpc/core/types"
 	"github.com/cosmos/cosmos-sdk/client/grpc/tmservice"
 )
 
@@ -56,22 +57,22 @@ func WriteSectionToToml(file *os.File, sectionName string, nodes map[string]int)
 	}
 }
 
-// Modify the function signature to:
-func ProcessPeer(peer *types.Peer) {
+func ProcessPeer(peer coretypes.Peer) {
 	rpcAddr := BuildRPCAddress(peer)
 	rpcAddr = NormalizeAddressWithRemoteIP(rpcAddr, peer.RemoteIP)
 	CheckNode("http://" + rpcAddr)
 
 	// Fetch network info
-	netInfo, err := FetchNetInfo("http://" + rpcAddr)
+	client, err := FetchClient("http://" + rpcAddr)
+	netInfo, err := FetchNetInfo(client)
 	if err != nil {
 		//		fmt.Println("Error fetching network info:", err)
 		return
 	}
 
 	// Process each peer
-	for _, peer := range netInfo.Result.Peers {
-		go func(peer types.Peer) {
+	for _, peer := range netInfo.Peers {
+		go func(peer coretypes.Peer) {
 			if !IsNodeVisited(peer.NodeInfo.Other.RPCAddress) {
 				MarkNodeAsVisited(peer.NodeInfo.Other.RPCAddress)
 				ProcessPeer(&peer)
@@ -105,9 +106,10 @@ func FetchNodeInfoGRPC(nodeAddr string) error {
 	return err
 }
 
-func FetchNetInfo(client string) (*types.NetInfoResponse, error) {
-
-	return &netInfo, err
+func FetchNetInfo(client *http.HTTP) (*coretypes.ResultNetInfo, error) {
+	ctx := context.Background()
+	netinfo, err := client.NetInfo(ctx)
+	return netinfo, err
 }
 
 func FetchNodeInfoAPI(nodeAddr string) error {
