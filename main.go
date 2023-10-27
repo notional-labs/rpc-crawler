@@ -14,5 +14,4 @@ func main() {
 
 	lib.CheckNode(initialNode)
 	lib.WriteNodesToToml(initialNode)
-
 }

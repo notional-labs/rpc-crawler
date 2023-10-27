@@ -10,10 +10,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/cosmos/cosmos-sdk/client/grpc/tmservice"
 	"github.com/notional-labs/rpc-crawler/types"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+
+	"github.com/cosmos/cosmos-sdk/client/grpc/tmservice"
 )
 
 var client = &http.Client{
@@ -135,6 +136,16 @@ func FetchNetInfo(nodeAddr string) (*types.NetInfoResponse, error) {
 	return &netInfo, err
 }
 
+func FetchNodeInfoAPI(nodeAddr string) error {
+	url := nodeAddr + "/cosmos/base/tendermint/v1beta1/node_info"
+	resp, err := HttpGet(url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	return err
+}
+
 func NormalizeAddressWithRemoteIP(nodeAddr string, remoteIP string) string {
 	nodeAddr = strings.Replace(nodeAddr, "0.0.0.0", remoteIP, -1)
 	nodeAddr = strings.Replace(nodeAddr, "127.0.0.1", remoteIP, -1)
@@ -185,6 +196,8 @@ func WriteNodesToToml(initialNode string) {
 	// Write sections to the file
 	WriteSectionToTomlSlice(file, "successfulNodesGRPC", successfulNodesGRPC.nodes)
 	WriteSectionToTomlSlice(file, "unsuccessfulNodesGRPC", unsuccessfulNodesGRPC.nodes)
+	WriteSectionToTomlSlice(file, "successfulNodesAPI", successfulNodesAPI.nodes)
+	WriteSectionToTomlSlice(file, "unsuccessfulNodesAPI", unsuccessfulNodesAPI.nodes)
 
 	fmt.Println(".toml file created with node details.")
 }

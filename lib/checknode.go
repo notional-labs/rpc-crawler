@@ -14,11 +14,13 @@ var archiveNodes = struct {
 	nodes []string
 }{nodes: []string{}}
 
-var totalNodesChecked int
-var successfulNodes = struct {
-	sync.RWMutex
-	nodes map[string]int
-}{nodes: make(map[string]int)}
+var (
+	totalNodesChecked int
+	successfulNodes   = struct {
+		sync.RWMutex
+		nodes map[string]int
+	}{nodes: make(map[string]int)}
+)
 var unsuccessfulNodes = struct {
 	sync.RWMutex
 	nodes []string
@@ -28,13 +30,26 @@ var successfulNodesGRPC = struct {
 	sync.RWMutex
 	nodes []string
 }{nodes: []string{}}
+
 var unsuccessfulNodesGRPC = struct {
 	sync.RWMutex
 	nodes []string
 }{nodes: []string{}}
 
-var initialNode string
-var nodeAddrGRPC string
+var successfulNodesAPI = struct {
+	sync.RWMutex
+	nodes []string
+}{nodes: []string{}}
+
+var unsuccessfulNodesAPI = struct {
+	sync.RWMutex
+	nodes []string
+}{nodes: []string{}}
+
+var (
+	initialNode  string
+	nodeAddrGRPC string
+)
 
 func CheckNode(nodeAddr string) {
 	if IsNodeVisited(nodeAddr) {
@@ -66,6 +81,7 @@ func CheckNode(nodeAddr string) {
 	if err == nil {
 		fmt.Println("Got net info from", nodeAddr)
 		CheckNodeGRPC(nodeAddr)
+		CheckNodeAPI(nodeAddr)
 		status, err := FetchStatus(nodeAddr)
 		if err != nil {
 			fmt.Println("Failed to fetch status from", nodeAddr)
@@ -98,6 +114,7 @@ func CheckNode(nodeAddr string) {
 	} else {
 		fmt.Println("Failed to fetch net_info from", nodeAddr)
 		CheckNodeGRPC(nodeAddr)
+		CheckNodeAPI(nodeAddr)
 		// Add to unsuccessful nodes
 		unsuccessfulNodes.Lock()
 		unsuccessfulNodes.nodes = append(unsuccessfulNodes.nodes, nodeAddr)
@@ -107,7 +124,6 @@ func CheckNode(nodeAddr string) {
 	for _, peer := range netinfo.Result.Peers {
 		ProcessPeer(&peer)
 	}
-
 }
 
 func CheckNodeGRPC(nodeAddr string) {
@@ -129,5 +145,25 @@ func CheckNodeGRPC(nodeAddr string) {
 		unsuccessfulNodesGRPC.Lock()
 		unsuccessfulNodesGRPC.nodes = append(unsuccessfulNodesGRPC.nodes, nodeAddrGRPC)
 		unsuccessfulNodesGRPC.Unlock()
+	}
+}
+
+func CheckNodeAPI(nodeAddr string) {
+	nodeAddrAPI := strings.Replace(nodeAddr, "26657", "1317", 1)
+	err := FetchNodeInfoAPI(nodeAddrAPI)
+	if err == nil {
+		fmt.Println("Got node info from", nodeAddrAPI)
+
+		// Add to successful nodes
+		successfulNodesAPI.Lock()
+		successfulNodesAPI.nodes = append(successfulNodesAPI.nodes, nodeAddrAPI)
+		successfulNodesAPI.Unlock()
+	} else {
+		fmt.Println("Failed to fetch node info from", nodeAddrAPI)
+
+		// Add to unsuccessful nodes
+		unsuccessfulNodesAPI.Lock()
+		unsuccessfulNodesAPI.nodes = append(unsuccessfulNodesAPI.nodes, nodeAddrAPI)
+		unsuccessfulNodesAPI.Unlock()
 	}
 }
