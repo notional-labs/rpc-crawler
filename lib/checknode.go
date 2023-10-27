@@ -62,12 +62,12 @@ func CheckNode(nodeAddr string) {
 	// Check if the node is the initial node
 	if initialNode == "" {
 		initialNode = nodeAddr
-		status, err := FetchStatus(nodeAddr)
+		client, err := FetchClient(nodeAddr)
 		if err != nil {
 			fmt.Println("Failed to fetch status from", nodeAddr)
 			return
 		}
-		initialChainID = status.Result.NodeInfo.Network
+		initialChainID = client.Result.NodeInfo.Network
 	}
 
 	// Skip if the node address is localhost and it's not the initial node
@@ -83,20 +83,20 @@ func CheckNode(nodeAddr string) {
 		fmt.Println("Got net info from", nodeAddr)
 		CheckNodeGRPC(nodeAddr)
 		CheckNodeAPI(nodeAddr)
-		status, err := FetchStatus(nodeAddr)
+		client, err := FetchClient(nodeAddr)
 		if err != nil {
-			fmt.Println("Failed to fetch status from", nodeAddr)
+			fmt.Println("Failed to fetch client from", nodeAddr)
 			return
 		}
 
 		// Verify chain_id
-		if status.Result.NodeInfo.Network != initialChainID {
+		if client.Result.NodeInfo.Network != initialChainID {
 			fmt.Println("Node", nodeAddr, "is on a different chain_id")
 			return
 		}
 
 		// Record the earliest block height
-		earliestBlockHeight, err := strconv.Atoi(status.Result.SyncInfo.EarliestBlockHeight)
+		earliestBlockHeight, err := strconv.Atoi(client.Result.SyncInfo.EarliestBlockHeight)
 		if err != nil {
 			return
 		}

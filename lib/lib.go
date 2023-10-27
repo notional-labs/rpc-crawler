@@ -2,14 +2,12 @@ package lib
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
-	"net/http"
 	"os"
 	"strings"
 	"sync"
-	"time"
 
+	"github.com/cometbft/cometbft/rpc/client/http"
 	"github.com/notional-labs/rpc-crawler/types"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -17,34 +15,18 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/grpc/tmservice"
 )
 
-var client = &http.Client{
-	Timeout: 3000 * time.Millisecond,
-	Transport: &http.Transport{
-		MaxIdleConns:        500,
-		IdleConnTimeout:     30 * time.Second,
-		MaxIdleConnsPerHost: 500,
-	},
-}
-
 var visited = struct {
 	sync.RWMutex
 	nodes map[string]bool
 }{nodes: make(map[string]bool)}
 
-func FetchStatus(nodeAddr string) (*types.StatusResponse, error) {
-	url := nodeAddr + "/status"
-	resp, err := HTTPGet(url)
+func FetchClient(nodeAddr string) (client *http.HTTP, err error) {
+	client, err = http.New(nodeAddr, "websocket")
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
 
-	var status types.StatusResponse
-	err = json.NewDecoder(resp.Body).Decode(&status)
-	if err != nil {
-		return nil, err
-	}
-	return &status, nil
+	return client, err
 }
 
 func BuildRPCAddress(peer *types.Peer) string {
@@ -123,16 +105,8 @@ func FetchNodeInfoGRPC(nodeAddr string) error {
 	return err
 }
 
-func FetchNetInfo(nodeAddr string) (*types.NetInfoResponse, error) {
-	url := nodeAddr + "/net_info"
-	resp, err := HTTPGet(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
+func FetchNetInfo(client string) (*types.NetInfoResponse, error) {
 
-	var netInfo types.NetInfoResponse
-	err = json.NewDecoder(resp.Body).Decode(&netInfo)
 	return &netInfo, err
 }
 
@@ -163,10 +137,6 @@ func MarkNodeAsVisited(nodeAddr string) {
 	visited.Lock()
 	defer visited.Unlock()
 	visited.nodes[nodeAddr] = true
-}
-
-func HTTPGet(url string) (*http.Response, error) {
-	return client.Get(url)
 }
 
 func WriteNodesToToml(initialNode string) {
