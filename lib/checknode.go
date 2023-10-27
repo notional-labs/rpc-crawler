@@ -24,6 +24,15 @@ var unsuccessfulNodes = struct {
 	nodes []string
 }{nodes: []string{}}
 
+var successfulNodesAPI = struct {
+	sync.RWMutex
+	nodes []string
+}{nodes: []string{}}
+var unsuccessfulNodesAPI = struct {
+	sync.RWMutex
+	nodes []string
+}{nodes: []string{}}
+
 var initialNode string
 
 func CheckNode(nodeAddr string) {
@@ -55,7 +64,7 @@ func CheckNode(nodeAddr string) {
 	netinfo, err := FetchNetInfo(nodeAddr)
 	if err == nil {
 		fmt.Println("Got net info from", nodeAddr)
-
+		CheckNodeAPI(nodeAddr)
 		status, err := FetchStatus(nodeAddr)
 		if err != nil {
 			fmt.Println("Failed to fetch status from", nodeAddr)
@@ -87,16 +96,35 @@ func CheckNode(nodeAddr string) {
 
 	} else {
 		fmt.Println("Failed to fetch net_info from", nodeAddr)
-
+		CheckNodeAPI(nodeAddr)
 		// Add to unsuccessful nodes
 		unsuccessfulNodes.Lock()
 		unsuccessfulNodes.nodes = append(unsuccessfulNodes.nodes, nodeAddr)
 		unsuccessfulNodes.Unlock()
 		return
 	}
-
 	for _, peer := range netinfo.Result.Peers {
 		ProcessPeer(&peer)
 	}
 
+}
+
+func CheckNodeAPI(nodeAddr string) {
+	nodeAddrAPI := strings.Replace(nodeAddr, "26657", "1317", 1)
+	err := FetchNodeInfoAPI(nodeAddrAPI)
+	if err == nil {
+		fmt.Println("Got node info from", nodeAddrAPI)
+
+		// Add to successful nodes
+		successfulNodesAPI.Lock()
+		successfulNodesAPI.nodes = append(successfulNodesAPI.nodes, nodeAddrAPI)
+		successfulNodesAPI.Unlock()
+	} else {
+		fmt.Println("Failed to fetch node info from", nodeAddrAPI)
+
+		// Add to unsuccessful nodes
+		unsuccessfulNodesAPI.Lock()
+		unsuccessfulNodesAPI.nodes = append(unsuccessfulNodesAPI.nodes, nodeAddrAPI)
+		unsuccessfulNodesAPI.Unlock()
+	}
 }

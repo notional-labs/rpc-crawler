@@ -13,10 +13,10 @@ import (
 )
 
 var client = &http.Client{
-	Timeout: 300 * time.Millisecond,
+	Timeout: 3000 * time.Millisecond,
 	Transport: &http.Transport{
 		MaxIdleConns:        500,
-		IdleConnTimeout:     90 * time.Second,
+		IdleConnTimeout:     30 * time.Second,
 		MaxIdleConnsPerHost: 500,
 	},
 }
@@ -106,6 +106,16 @@ func FetchNetInfo(nodeAddr string) (*types.NetInfoResponse, error) {
 	return &netInfo, err
 }
 
+func FetchNodeInfoAPI(nodeAddr string) error {
+	url := nodeAddr + "/cosmos/base/tendermint/v1beta1/node_info"
+	resp, err := HttpGet(url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	return err
+}
+
 func NormalizeAddressWithRemoteIP(nodeAddr string, remoteIP string) string {
 	nodeAddr = strings.Replace(nodeAddr, "0.0.0.0", remoteIP, -1)
 	nodeAddr = strings.Replace(nodeAddr, "127.0.0.1", remoteIP, -1)
@@ -152,6 +162,10 @@ func WriteNodesToToml(initialNode string) {
 	WriteSectionToToml(file, "successfulNodes", successfulNodes.nodes)
 	WriteSectionToTomlSlice(file, "unsuccessfulNodes", unsuccessfulNodes.nodes)
 	WriteSectionToTomlSlice(file, "archiveNodes", archiveNodes.nodes)
+
+	// Write sections to the file
+	WriteSectionToTomlSlice(file, "successfulNodesAPI", successfulNodesAPI.nodes)
+	WriteSectionToTomlSlice(file, "unsuccessfulNodesAPI", unsuccessfulNodesAPI.nodes)
 
 	fmt.Println(".toml file created with node details.")
 }
