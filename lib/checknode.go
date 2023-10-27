@@ -122,10 +122,9 @@ func CheckNode(nodeAddr string) {
 		unsuccessfulNodes.Unlock()
 		return
 	}
-	for _, peer := range netinfo.Result.Peers {
-		peer := peer
-		ProcessPeer(&peer)
-	}
+
+	ProcessPeers(netinfo.Result.Peers, 69)
+
 }
 
 func CheckNodeGRPC(nodeAddr string) {
