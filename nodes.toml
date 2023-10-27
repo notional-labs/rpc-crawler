@@ -1,74 +1,291 @@
 [sourceNode]
 node = "http://sentry-01.hosts.testnet.cudos.org:26657"
 
-totalNodesChecked = 27
+totalNodesChecked = 26
 
-successfulNodes = {
-    "http://185.247.207.13:26657": "3603400",
-    "http://185.247.207.17:26657": "3603400",
-    "http://185.247.207.15:26657": "3603400",
-    "http://23.88.103.131:26657": "3603400",
-    "http://34.66.10.69:26657": "3603400",
-    "http://sentry-01.hosts.testnet.cudos.org:26657": "3603400",
-    "http://84.45.68.62:26657": "3603400",
-    "http://185.247.207.12:26657": "3603400",
-    "http://62.31.255.181:26657": "3603400",
-    "http://185.247.207.14:26657": "3603400",
-    "http://62.31.255.182:26657": "3603400",
-    "http://84.45.68.9:26657": "3603400",
-    "http://34.121.154.165:26657": "3603400",
-}
-
-unsuccessfulNodes = [
-    "http://93.151.164.241:26657",
-    "http://185.247.207.16:26657",
-    "http://185.247.207.9:26657",
-    "http://10.9.0.1:26657",
-    "http://86.27.197.205:26657",
-    "http://185.247.207.10:26657",
-    "http://185.247.207.8:26657",
-    "http://185.247.207.11:26657",
-    "http://162.55.98.45:26657",
-    "http://195.3.220.52:26657",
-    "http://34.140.73.204:26657",
-    "http://192.168.4.60:26657",
-    "http://87.20.12.119:26657",
-    "http://185.247.207.32:26657",
+Starting node = http://185.247.207.15:26657 
+[
+    earliest_block = "3603400",
+    rpc = "http://185.247.207.15:26657",
+    rpc_status = "successful",
+    grpc = "185.247.207.15:9090",
+    grpc_status = "successful",
+    api = "http://185.247.207.15:1317",
+    api_status = "unsuccessful",
 ]
 
-archiveNodes = [
+Starting node = http://23.88.103.131:26657 
+[
+    earliest_block = "3603400",
+    rpc = "http://23.88.103.131:26657",
+    rpc_status = "successful",
+    grpc = "23.88.103.131:9090",
+    grpc_status = "successful",
+    api = "http://23.88.103.131:1317",
+    api_status = "successful",
 ]
 
-successfulNodesGRPC = [
-    "sentry-01.hosts.testnet.cudos.org:9090",
-    "185.247.207.16:9090",
-    "84.45.68.62:9090",
-    "84.45.68.9:9090",
-    "185.247.207.9:9090",
-    "185.247.207.14:9090",
-    "185.247.207.13:9090",
-    "185.247.207.10:9090",
-    "185.247.207.17:9090",
-    "185.247.207.8:9090",
-    "185.247.207.12:9090",
-    "185.247.207.11:9090",
-    "185.247.207.15:9090",
-    "34.121.154.165:9090",
-    "23.88.103.131:9090",
-    "34.66.10.69:9090",
-    "62.31.255.182:9090",
-    "185.247.207.32:9090",
+Starting node = http://34.140.73.204:26657 
+[
+    earliest_block = "0",
+    rpc = "http://34.140.73.204:26657",
+    rpc_status = "unsuccessful",
+    grpc = "34.140.73.204:9090",
+    grpc_status = "unsuccessful",
+    api = "http://34.140.73.204:1317",
+    api_status = "unsuccessful",
 ]
 
-unsuccessfulNodesGRPC = [
-    "93.151.164.241:9090",
-    "10.9.0.1:9090",
-    "86.27.197.205:9090",
-    "62.31.255.181:9090",
-    "162.55.98.45:9090",
-    "195.3.220.52:9090",
-    "34.140.73.204:9090",
-    "192.168.4.60:9090",
-    "87.20.12.119:9090",
+Starting node = http://84.45.68.62:26657 
+[
+    earliest_block = "3603400",
+    rpc = "http://84.45.68.62:26657",
+    rpc_status = "successful",
+    grpc = "84.45.68.62:9090",
+    grpc_status = "successful",
+    api = "http://84.45.68.62:1317",
+    api_status = "unsuccessful",
+]
+
+Starting node = http://86.27.197.205:26657 
+[
+    earliest_block = "0",
+    rpc = "http://86.27.197.205:26657",
+    rpc_status = "unsuccessful",
+    grpc = "86.27.197.205:9090",
+    grpc_status = "unsuccessful",
+    api = "http://86.27.197.205:1317",
+    api_status = "unsuccessful",
+]
+
+Starting node = http://185.247.207.14:26657 
+[
+    earliest_block = "3603400",
+    rpc = "http://185.247.207.14:26657",
+    rpc_status = "successful",
+    grpc = "185.247.207.14:9090",
+    grpc_status = "successful",
+    api = "http://185.247.207.14:1317",
+    api_status = "successful",
+]
+
+Starting node = http://185.247.207.11:26657 
+[
+    earliest_block = "0",
+    rpc = "http://185.247.207.11:26657",
+    rpc_status = "unsuccessful",
+    grpc = "185.247.207.11:9090",
+    grpc_status = "successful",
+    api = "http://185.247.207.11:1317",
+    api_status = "unsuccessful",
+]
+
+Starting node = http://62.31.255.181:26657 
+[
+    earliest_block = "3603400",
+    rpc = "http://62.31.255.181:26657",
+    rpc_status = "successful",
+    grpc = "62.31.255.181:9090",
+    grpc_status = "unsuccessful",
+    api = "http://62.31.255.181:1317",
+    api_status = "unsuccessful",
+]
+
+Starting node = http://185.247.207.13:26657 
+[
+    earliest_block = "3603400",
+    rpc = "http://185.247.207.13:26657",
+    rpc_status = "successful",
+    grpc = "185.247.207.13:9090",
+    grpc_status = "successful",
+    api = "http://185.247.207.13:1317",
+    api_status = "successful",
+]
+
+Starting node = http://185.247.207.17:26657 
+[
+    earliest_block = "3603400",
+    rpc = "http://185.247.207.17:26657",
+    rpc_status = "successful",
+    grpc = "185.247.207.17:9090",
+    grpc_status = "successful",
+    api = "http://185.247.207.17:1317",
+    api_status = "successful",
+]
+
+Starting node = http://185.247.207.8:26657 
+[
+    earliest_block = "0",
+    rpc = "http://185.247.207.8:26657",
+    rpc_status = "unsuccessful",
+    grpc = "185.247.207.8:9090",
+    grpc_status = "successful",
+    api = "http://185.247.207.8:1317",
+    api_status = "unsuccessful",
+]
+
+Starting node = http://87.20.12.119:26657 
+[
+    earliest_block = "0",
+    rpc = "http://87.20.12.119:26657",
+    rpc_status = "unsuccessful",
+    grpc = "87.20.12.119:9090",
+    grpc_status = "unsuccessful",
+    api = "http://87.20.12.119:1317",
+    api_status = "unsuccessful",
+]
+
+Starting node = http://84.45.68.9:26657 
+[
+    earliest_block = "3603400",
+    rpc = "http://84.45.68.9:26657",
+    rpc_status = "successful",
+    grpc = "84.45.68.9:9090",
+    grpc_status = "successful",
+    api = "http://84.45.68.9:1317",
+    api_status = "unsuccessful",
+]
+
+Starting node = http://185.247.207.10:26657 
+[
+    earliest_block = "0",
+    rpc = "http://185.247.207.10:26657",
+    rpc_status = "unsuccessful",
+    grpc = "185.247.207.10:9090",
+    grpc_status = "successful",
+    api = "http://185.247.207.10:1317",
+    api_status = "unsuccessful",
+]
+
+Starting node = http://10.9.0.1:26657 
+[
+    earliest_block = "0",
+    rpc = "http://10.9.0.1:26657",
+    rpc_status = "unsuccessful",
+    grpc = "10.9.0.1:9090",
+    grpc_status = "unsuccessful",
+    api = "http://10.9.0.1:1317",
+    api_status = "unsuccessful",
+]
+
+Starting node = http://185.247.207.12:26657 
+[
+    earliest_block = "3603400",
+    rpc = "http://185.247.207.12:26657",
+    rpc_status = "successful",
+    grpc = "185.247.207.12:9090",
+    grpc_status = "successful",
+    api = "http://185.247.207.12:1317",
+    api_status = "successful",
+]
+
+Starting node = http://185.247.207.32:26657 
+[
+    earliest_block = "0",
+    rpc = "http://185.247.207.32:26657",
+    rpc_status = "unsuccessful",
+    grpc = "185.247.207.32:9090",
+    grpc_status = "successful",
+    api = "http://185.247.207.32:1317",
+    api_status = "unsuccessful",
+]
+
+Starting node = http://185.247.207.9:26657 
+[
+    earliest_block = "0",
+    rpc = "http://185.247.207.9:26657",
+    rpc_status = "unsuccessful",
+    grpc = "185.247.207.9:9090",
+    grpc_status = "successful",
+    api = "http://185.247.207.9:1317",
+    api_status = "unsuccessful",
+]
+
+Starting node = http://34.121.154.165:26657 
+[
+    earliest_block = "3603400",
+    rpc = "http://34.121.154.165:26657",
+    rpc_status = "successful",
+    grpc = "34.121.154.165:9090",
+    grpc_status = "successful",
+    api = "http://34.121.154.165:1317",
+    api_status = "successful",
+]
+
+Starting node = http://195.3.220.52:26657 
+[
+    earliest_block = "0",
+    rpc = "http://195.3.220.52:26657",
+    rpc_status = "unsuccessful",
+    grpc = "195.3.220.52:9090",
+    grpc_status = "unsuccessful",
+    api = "http://195.3.220.52:1317",
+    api_status = "unsuccessful",
+]
+
+Starting node = http://62.31.255.182:26657 
+[
+    earliest_block = "3603400",
+    rpc = "http://62.31.255.182:26657",
+    rpc_status = "successful",
+    grpc = "62.31.255.182:9090",
+    grpc_status = "successful",
+    api = "http://62.31.255.182:1317",
+    api_status = "successful",
+]
+
+Starting node = http://192.168.4.60:26657 
+[
+    earliest_block = "0",
+    rpc = "http://192.168.4.60:26657",
+    rpc_status = "unsuccessful",
+    grpc = "192.168.4.60:9090",
+    grpc_status = "unsuccessful",
+    api = "http://192.168.4.60:1317",
+    api_status = "unsuccessful",
+]
+
+Starting node = http://sentry-01.hosts.testnet.cudos.org:26657 
+[
+    earliest_block = "3603400",
+    rpc = "http://sentry-01.hosts.testnet.cudos.org:26657",
+    rpc_status = "successful",
+    grpc = "sentry-01.hosts.testnet.cudos.org:9090",
+    grpc_status = "successful",
+    api = "http://sentry-01.hosts.testnet.cudos.org:1317",
+    api_status = "successful",
+]
+
+Starting node = http://185.247.207.16:26657 
+[
+    earliest_block = "0",
+    rpc = "http://185.247.207.16:26657",
+    rpc_status = "unsuccessful",
+    grpc = "185.247.207.16:9090",
+    grpc_status = "successful",
+    api = "http://185.247.207.16:1317",
+    api_status = "unsuccessful",
+]
+
+Starting node = http://162.55.98.45:26657 
+[
+    earliest_block = "0",
+    rpc = "http://162.55.98.45:26657",
+    rpc_status = "unsuccessful",
+    grpc = "162.55.98.45:9090",
+    grpc_status = "unsuccessful",
+    api = "http://162.55.98.45:1317",
+    api_status = "unsuccessful",
+]
+
+Starting node = http://34.66.10.69:26657 
+[
+    earliest_block = "3603400",
+    rpc = "http://34.66.10.69:26657",
+    rpc_status = "successful",
+    grpc = "34.66.10.69:9090",
+    grpc_status = "successful",
+    api = "http://34.66.10.69:1317",
+    api_status = "successful",
 ]
 
