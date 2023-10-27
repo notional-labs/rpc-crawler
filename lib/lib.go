@@ -1,6 +1,7 @@
 package lib
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -10,6 +11,10 @@ import (
 	"time"
 
 	"github.com/notional-labs/rpc-crawler/types"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
+
+	"github.com/cosmos/cosmos-sdk/client/grpc/tmservice"
 )
 
 var client = &http.Client{
@@ -28,7 +33,7 @@ var visited = struct {
 
 func FetchStatus(nodeAddr string) (*types.StatusResponse, error) {
 	url := nodeAddr + "/status"
-	resp, err := HttpGet(url)
+	resp, err := HTTPGet(url)
 	if err != nil {
 		return nil, err
 	}
@@ -93,9 +98,34 @@ func ProcessPeer(peer *types.Peer) {
 	}
 }
 
+func FetchNodeInfoGRPC(nodeAddr string) error {
+	grpcConn, err := grpc.Dial(
+		nodeAddr,
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+	)
+	if err != nil {
+		return err
+	}
+
+	defer grpcConn.Close()
+
+	serviceClient := tmservice.NewServiceClient(grpcConn)
+	_, err = serviceClient.GetNodeInfo(
+		context.Background(),
+		&tmservice.GetNodeInfoRequest{},
+	)
+
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+
+	return err
+}
+
 func FetchNetInfo(nodeAddr string) (*types.NetInfoResponse, error) {
 	url := nodeAddr + "/net_info"
-	resp, err := HttpGet(url)
+	resp, err := HTTPGet(url)
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +138,7 @@ func FetchNetInfo(nodeAddr string) (*types.NetInfoResponse, error) {
 
 func FetchNodeInfoAPI(nodeAddr string) error {
 	url := nodeAddr + "/cosmos/base/tendermint/v1beta1/node_info"
-	resp, err := HttpGet(url)
+	resp, err := HTTPGet(url)
 	if err != nil {
 		return err
 	}
@@ -117,8 +147,8 @@ func FetchNodeInfoAPI(nodeAddr string) error {
 }
 
 func NormalizeAddressWithRemoteIP(nodeAddr string, remoteIP string) string {
-	nodeAddr = strings.Replace(nodeAddr, "0.0.0.0", remoteIP, -1)
-	nodeAddr = strings.Replace(nodeAddr, "127.0.0.1", remoteIP, -1)
+	nodeAddr = strings.ReplaceAll(nodeAddr, "0.0.0.0", remoteIP)
+	nodeAddr = strings.ReplaceAll(nodeAddr, "127.0.0.1", remoteIP)
 	return nodeAddr
 }
 
@@ -135,7 +165,7 @@ func MarkNodeAsVisited(nodeAddr string) {
 	visited.nodes[nodeAddr] = true
 }
 
-func HttpGet(url string) (*http.Response, error) {
+func HTTPGet(url string) (*http.Response, error) {
 	return client.Get(url)
 }
 
@@ -164,6 +194,8 @@ func WriteNodesToToml(initialNode string) {
 	WriteSectionToTomlSlice(file, "archiveNodes", archiveNodes.nodes)
 
 	// Write sections to the file
+	WriteSectionToTomlSlice(file, "successfulNodesGRPC", successfulNodesGRPC.nodes)
+	WriteSectionToTomlSlice(file, "unsuccessfulNodesGRPC", unsuccessfulNodesGRPC.nodes)
 	WriteSectionToTomlSlice(file, "successfulNodesAPI", successfulNodesAPI.nodes)
 	WriteSectionToTomlSlice(file, "unsuccessfulNodesAPI", unsuccessfulNodesAPI.nodes)
 

@@ -14,12 +14,25 @@ var archiveNodes = struct {
 	nodes []string
 }{nodes: []string{}}
 
-var totalNodesChecked int
-var successfulNodes = struct {
-	sync.RWMutex
-	nodes map[string]int
-}{nodes: make(map[string]int)}
+var (
+	totalNodesChecked int
+	successfulNodes   = struct {
+		sync.RWMutex
+		nodes map[string]int
+	}{nodes: make(map[string]int)}
+)
+
 var unsuccessfulNodes = struct {
+	sync.RWMutex
+	nodes []string
+}{nodes: []string{}}
+
+var successfulNodesGRPC = struct {
+	sync.RWMutex
+	nodes []string
+}{nodes: []string{}}
+
+var unsuccessfulNodesGRPC = struct {
 	sync.RWMutex
 	nodes []string
 }{nodes: []string{}}
@@ -28,12 +41,16 @@ var successfulNodesAPI = struct {
 	sync.RWMutex
 	nodes []string
 }{nodes: []string{}}
+
 var unsuccessfulNodesAPI = struct {
 	sync.RWMutex
 	nodes []string
 }{nodes: []string{}}
 
-var initialNode string
+var (
+	initialNode  string
+	nodeAddrGRPC string
+)
 
 func CheckNode(nodeAddr string) {
 	if IsNodeVisited(nodeAddr) {
@@ -64,6 +81,7 @@ func CheckNode(nodeAddr string) {
 	netinfo, err := FetchNetInfo(nodeAddr)
 	if err == nil {
 		fmt.Println("Got net info from", nodeAddr)
+		CheckNodeGRPC(nodeAddr)
 		CheckNodeAPI(nodeAddr)
 		status, err := FetchStatus(nodeAddr)
 		if err != nil {
@@ -96,6 +114,7 @@ func CheckNode(nodeAddr string) {
 
 	} else {
 		fmt.Println("Failed to fetch net_info from", nodeAddr)
+		CheckNodeGRPC(nodeAddr)
 		CheckNodeAPI(nodeAddr)
 		// Add to unsuccessful nodes
 		unsuccessfulNodes.Lock()
@@ -104,9 +123,31 @@ func CheckNode(nodeAddr string) {
 		return
 	}
 	for _, peer := range netinfo.Result.Peers {
+		peer := peer
 		ProcessPeer(&peer)
 	}
+}
 
+func CheckNodeGRPC(nodeAddr string) {
+	nodeAddrGRPC = strings.Replace(nodeAddr, "26657", "9090", 1)
+	nodeAddrGRPC = strings.Replace(nodeAddrGRPC, "http://", "", 1)
+	nodeAddrGRPC = strings.Replace(nodeAddrGRPC, "https://", "", 1)
+	err := FetchNodeInfoGRPC(nodeAddrGRPC)
+	if err == nil {
+		fmt.Println("Got node info GRPC from", nodeAddrGRPC)
+
+		// Add to successful nodes
+		successfulNodesGRPC.Lock()
+		successfulNodesGRPC.nodes = append(successfulNodesGRPC.nodes, nodeAddrGRPC)
+		successfulNodesGRPC.Unlock()
+	} else {
+		fmt.Println("Failed to fetch node info GRPC from", nodeAddrGRPC)
+
+		// Add to unsuccessful nodes
+		unsuccessfulNodesGRPC.Lock()
+		unsuccessfulNodesGRPC.nodes = append(unsuccessfulNodesGRPC.nodes, nodeAddrGRPC)
+		unsuccessfulNodesGRPC.Unlock()
+	}
 }
 
 func CheckNodeAPI(nodeAddr string) {
