@@ -67,7 +67,8 @@ func CheckNode(nodeAddr string) {
 			fmt.Println("Failed to fetch status from", nodeAddr)
 			return
 		}
-		initialChainID = client.Result.NodeInfo.Network
+		status := client.Result.SyncInfo
+		initialChainID = 
 	}
 
 	// Skip if the node address is localhost and it's not the initial node
@@ -96,7 +97,7 @@ func CheckNode(nodeAddr string) {
 		}
 
 		// Record the earliest block height
-		earliestBlockHeight, err := strconv.Atoi(client.Result.SyncInfo.EarliestBlockHeight)
+		earliestBlockHeight, err := strconv.Atoi(client.SyncInfo.EarliestBlockHeight)
 		if err != nil {
 			return
 		}
@@ -122,9 +123,9 @@ func CheckNode(nodeAddr string) {
 		unsuccessfulNodes.Unlock()
 		return
 	}
-	for _, peer := range netinfo.Result.Peers {
+	for _, peer := range netinfo.Peers {
 		peer := peer
-		ProcessPeer(&peer)
+		ProcessPeer(peer)
 	}
 }
 

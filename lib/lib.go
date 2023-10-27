@@ -8,7 +8,6 @@ import (
 	"sync"
 
 	"github.com/cometbft/cometbft/rpc/client/http"
-	"github.com/notional-labs/rpc-crawler/types"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
@@ -30,7 +29,7 @@ func FetchClient(nodeAddr string) (client *http.HTTP, err error) {
 	return client, err
 }
 
-func BuildRPCAddress(peer *types.Peer) string {
+func BuildRPCAddress(peer string) string {
 	rpcAddr := peer.NodeInfo.Other.RPCAddress
 	rpcAddr = strings.TrimPrefix(rpcAddr, "tcp://")
 
@@ -58,7 +57,7 @@ func WriteSectionToToml(file *os.File, sectionName string, nodes map[string]int)
 }
 
 func ProcessPeer(peer coretypes.Peer) {
-	rpcAddr := BuildRPCAddress(peer)
+	rpcAddr := BuildRPCAddress(peer.RemoteIP)
 	rpcAddr = NormalizeAddressWithRemoteIP(rpcAddr, peer.RemoteIP)
 	CheckNode("http://" + rpcAddr)
 
