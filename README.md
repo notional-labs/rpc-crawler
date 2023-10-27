@@ -8,6 +8,8 @@ It will output to nodes.toml:
 * total number of nodes
 * successful node urls
 * unsuccessful node urls
+* Open GRPC
+* Open API
 
 
 ### Install
@@ -28,10 +30,6 @@ rpc-crawler https://notionalapi.com/cosmos
 ```
 
 
-### Feature plan
 
-This software is nice and complete but:
-* I'd like to add a check to the status endpoint so that we can also see the range of blocks available on each node.
-* search for open grpc endpoints
 
 
