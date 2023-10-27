@@ -57,36 +57,36 @@ func BuildRPCAddress(peer *types.Peer) string {
 	return rpcAddr
 }
 
-func WriteSectionToToml(file *os.File, sectionName string) {
-	nodeAddrGRPC = strings.Replace(sectionName, "26657", "9090", 1)
+func WriteSectionToToml(file *os.File, nodeAddr string) {
+	nodeAddrGRPC = strings.Replace(nodeAddr, "26657", "9090", 1)
 	nodeAddrGRPC = strings.Replace(nodeAddrGRPC, "http://", "", 1)
 	nodeAddrGRPC = strings.Replace(nodeAddrGRPC, "https://", "", 1)
-	nodeAddrAPI = strings.Replace(sectionName, "26657", "1317", 1)
-	_, err := file.WriteString(fmt.Sprintf("Starting node = %s \n", sectionName))
+	nodeAddrAPI = strings.Replace(nodeAddr, "26657", "1317", 1)
+	_, err := file.WriteString(fmt.Sprintf("Starting node = %s \n", nodeAddr))
 	if err != nil {
 		fmt.Println("cannot write starting node to toml file")
 	}
-	_, err = file.WriteString(fmt.Sprint("[\n"))
+	_, err = file.WriteString(fmt.Sprintf("%s = [\n", moniker[nodeAddr]))
 	if err != nil {
 		fmt.Println("cannot write section to toml file")
 	}
-	_, err = file.WriteString(fmt.Sprintf("    earliest_block = \"%d\",\n", earliest_block[sectionName]))
+	_, err = file.WriteString(fmt.Sprintf("    earliest_block = \"%d\",\n", earliest_block[nodeAddr]))
 	if err != nil {
 		fmt.Println("cannot write node to toml file")
 	}
 	rpc := "unsuccessful"
-	if rpc_addr[sectionName] {
+	if rpc_addr[nodeAddr] {
 		rpc = "successful"
 	}
 	grpc := "unsuccessful"
-	if grpc_addr[sectionName] {
+	if grpc_addr[nodeAddr] {
 		grpc = "successful"
 	}
 	api := "unsuccessful"
-	if api_addr[sectionName] {
+	if api_addr[nodeAddr] {
 		api = "successful"
 	}
-	_, err = file.WriteString(fmt.Sprintf("    rpc = \"%s\",\n", sectionName))
+	_, err = file.WriteString(fmt.Sprintf("    rpc = \"%s\",\n", nodeAddr))
 	if err != nil {
 		fmt.Println("cannot write node to toml file")
 	}
@@ -235,5 +235,33 @@ func WriteNodesToToml(initialNode string) {
 		WriteSectionToToml(file, key)
 	}
 
+	WriteSectionToTomlSlice(file, "successfulRPCNodes", rpc_addr, true)
+	WriteSectionToTomlSlice(file, "unsuccessfulRPCNodes", rpc_addr, false)
+	WriteSectionToTomlSlice(file, "successfulGRPCNodes", grpc_addr, true)
+	WriteSectionToTomlSlice(file, "unsuccessfulGRPCNodes", grpc_addr, false)
+	WriteSectionToTomlSlice(file, "successfulAPINodes", api_addr, true)
+	WriteSectionToTomlSlice(file, "unsuccessfulAPINodes", api_addr, false)
+
 	fmt.Println(".toml file created with node details.")
+}
+
+func WriteSectionToTomlSlice(file *os.File, sectionName string, nodes map[string]bool, status bool) {
+	_, err := file.WriteString(fmt.Sprintf("%s = [\n", sectionName))
+	if err != nil {
+		fmt.Println("cannot write node to toml file")
+	}
+
+	for key, val := range nodes {
+		if val == status {
+			_, err = file.WriteString(fmt.Sprintf("    %s\n", key))
+			if err != nil {
+				fmt.Println("cannot write node to toml file")
+			}
+		}
+	}
+
+	_, err = file.WriteString(fmt.Sprintf("]\n"))
+	if err != nil {
+		fmt.Println("cannot write node to toml file")
+	}
 }

@@ -1,6 +1,6 @@
 module github.com/notional-labs/rpc-crawler
 
-go 1.20
+go 1.21.3
 
 require (
 	github.com/cosmos/cosmos-sdk v0.47.5

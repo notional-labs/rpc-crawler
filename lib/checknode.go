@@ -11,6 +11,7 @@ var (
 	rpc_addr          map[string]bool
 	grpc_addr         map[string]bool
 	api_addr          map[string]bool
+	moniker           map[string]string
 	initialNode       string
 	nodeAddrGRPC      string
 	nodeAddrAPI       string
@@ -33,6 +34,7 @@ func CheckNode(nodeAddr string) {
 		grpc_addr = map[string]bool{}
 		api_addr = map[string]bool{}
 		archiveNodes = map[string]bool{}
+		moniker = map[string]string{}
 		initialNode = nodeAddr
 		status, err := FetchStatus(nodeAddr)
 		if err != nil {
@@ -40,6 +42,7 @@ func CheckNode(nodeAddr string) {
 			return
 		}
 		initialChainID = status.Result.NodeInfo.Network
+		moniker[nodeAddr] = status.Result.NodeInfo.Moniker
 	}
 
 	// Skip if the node address is localhost and it's not the initial node
@@ -56,6 +59,7 @@ func CheckNode(nodeAddr string) {
 		CheckNodeGRPC(nodeAddr)
 		CheckNodeAPI(nodeAddr)
 		status, err := FetchStatus(nodeAddr)
+		moniker[nodeAddr] = status.Result.NodeInfo.Moniker
 		if err != nil {
 			fmt.Println("Failed to fetch status from", nodeAddr)
 			return
