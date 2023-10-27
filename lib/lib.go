@@ -33,7 +33,7 @@ var visited = struct {
 
 func FetchStatus(nodeAddr string) (*types.StatusResponse, error) {
 	url := nodeAddr + "/status"
-	resp, err := HttpGet(url)
+	resp, err := HTTPGet(url)
 	if err != nil {
 		return nil, err
 	}
@@ -125,7 +125,7 @@ func FetchNodeInfoGRPC(nodeAddr string) error {
 
 func FetchNetInfo(nodeAddr string) (*types.NetInfoResponse, error) {
 	url := nodeAddr + "/net_info"
-	resp, err := HttpGet(url)
+	resp, err := HTTPGet(url)
 	if err != nil {
 		return nil, err
 	}
@@ -138,7 +138,7 @@ func FetchNetInfo(nodeAddr string) (*types.NetInfoResponse, error) {
 
 func FetchNodeInfoAPI(nodeAddr string) error {
 	url := nodeAddr + "/cosmos/base/tendermint/v1beta1/node_info"
-	resp, err := HttpGet(url)
+	resp, err := HTTPGet(url)
 	if err != nil {
 		return err
 	}
@@ -147,8 +147,8 @@ func FetchNodeInfoAPI(nodeAddr string) error {
 }
 
 func NormalizeAddressWithRemoteIP(nodeAddr string, remoteIP string) string {
-	nodeAddr = strings.Replace(nodeAddr, "0.0.0.0", remoteIP, -1)
-	nodeAddr = strings.Replace(nodeAddr, "127.0.0.1", remoteIP, -1)
+	nodeAddr = strings.ReplaceAll(nodeAddr, "0.0.0.0", remoteIP)
+	nodeAddr = strings.ReplaceAll(nodeAddr, "127.0.0.1", remoteIP)
 	return nodeAddr
 }
 
@@ -165,7 +165,7 @@ func MarkNodeAsVisited(nodeAddr string) {
 	visited.nodes[nodeAddr] = true
 }
 
-func HttpGet(url string) (*http.Response, error) {
+func HTTPGet(url string) (*http.Response, error) {
 	return client.Get(url)
 }
 

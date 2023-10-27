@@ -21,6 +21,7 @@ var (
 		nodes map[string]int
 	}{nodes: make(map[string]int)}
 )
+
 var unsuccessfulNodes = struct {
 	sync.RWMutex
 	nodes []string
@@ -122,6 +123,7 @@ func CheckNode(nodeAddr string) {
 		return
 	}
 	for _, peer := range netinfo.Result.Peers {
+		peer := peer
 		ProcessPeer(&peer)
 	}
 }
