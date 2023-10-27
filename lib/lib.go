@@ -11,9 +11,9 @@ import (
 	"time"
 
 	"github.com/cosmos/cosmos-sdk/client/grpc/tmservice"
-	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/notional-labs/rpc-crawler/types"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 var client = &http.Client{
@@ -100,10 +100,7 @@ func ProcessPeer(peer *types.Peer) {
 func FetchNodeInfoGRPC(nodeAddr string) error {
 	grpcConn, err := grpc.Dial(
 		nodeAddr,
-		grpc.WithInsecure(), // The Cosmos SDK doesn't support any transport security mechanism.
-		// This instantiates a general gRPC codec which handles proto bytes. We pass in a nil interface registry
-		// if the request/response types contain interface instead of 'nil' you should pass the application specific codec.
-		grpc.WithDefaultCallOptions(grpc.ForceCodec(codec.NewProtoCodec(nil).GRPCCodec())),
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {
 		return err
@@ -112,7 +109,7 @@ func FetchNodeInfoGRPC(nodeAddr string) error {
 	defer grpcConn.Close()
 
 	serviceClient := tmservice.NewServiceClient(grpcConn)
-	nodeInfoRes, err := serviceClient.GetNodeInfo(
+	_, err = serviceClient.GetNodeInfo(
 		context.Background(),
 		&tmservice.GetNodeInfoRequest{},
 	)
@@ -121,7 +118,7 @@ func FetchNodeInfoGRPC(nodeAddr string) error {
 		fmt.Println(err)
 		return err
 	}
-	fmt.Println(nodeInfoRes)
+
 	return err
 }
 

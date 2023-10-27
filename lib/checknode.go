@@ -34,6 +34,7 @@ var unsuccessfulNodesGRPC = struct {
 }{nodes: []string{}}
 
 var initialNode string
+var nodeAddrGRPC string
 
 func CheckNode(nodeAddr string) {
 	if IsNodeVisited(nodeAddr) {
@@ -110,8 +111,9 @@ func CheckNode(nodeAddr string) {
 }
 
 func CheckNodeGRPC(nodeAddr string) {
-	nodeAddrGRPC := strings.Replace(nodeAddr, "26657", "9090", 1)
-	nodeAddrGRPC = strings.Replace(nodeAddr, "http://", "", 1)
+	nodeAddrGRPC = strings.Replace(nodeAddr, "26657", "9090", 1)
+	nodeAddrGRPC = strings.Replace(nodeAddrGRPC, "http://", "", 1)
+	nodeAddrGRPC = strings.Replace(nodeAddrGRPC, "https://", "", 1)
 	err := FetchNodeInfoGRPC(nodeAddrGRPC)
 	if err == nil {
 		fmt.Println("Got node info GRPC from", nodeAddrGRPC)
