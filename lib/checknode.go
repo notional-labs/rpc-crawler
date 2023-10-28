@@ -4,52 +4,20 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-	"sync"
 )
 
-var initialChainID string
-
-var archiveNodes = struct {
-	sync.RWMutex
-	nodes []string
-}{nodes: []string{}}
-
 var (
+	earliest_block    map[string]int
+	rpc_addr          map[string]bool
+	grpc_addr         map[string]bool
+	api_addr          map[string]bool
+	moniker           map[string]string
+	initialNode       string
+	nodeAddrGRPC      string
+	nodeAddrAPI       string
 	totalNodesChecked int
-	successfulNodes   = struct {
-		sync.RWMutex
-		nodes map[string]int
-	}{nodes: make(map[string]int)}
-)
-
-var unsuccessfulNodes = struct {
-	sync.RWMutex
-	nodes []string
-}{nodes: []string{}}
-
-var successfulNodesGRPC = struct {
-	sync.RWMutex
-	nodes []string
-}{nodes: []string{}}
-
-var unsuccessfulNodesGRPC = struct {
-	sync.RWMutex
-	nodes []string
-}{nodes: []string{}}
-
-var successfulNodesAPI = struct {
-	sync.RWMutex
-	nodes []string
-}{nodes: []string{}}
-
-var unsuccessfulNodesAPI = struct {
-	sync.RWMutex
-	nodes []string
-}{nodes: []string{}}
-
-var (
-	initialNode  string
-	nodeAddrGRPC string
+	initialChainID    string
+	archiveNodes      map[string]bool
 )
 
 func CheckNode(nodeAddr string) {
@@ -61,6 +29,12 @@ func CheckNode(nodeAddr string) {
 
 	// Check if the node is the initial node
 	if initialNode == "" {
+		earliest_block = map[string]int{}
+		rpc_addr = map[string]bool{}
+		grpc_addr = map[string]bool{}
+		api_addr = map[string]bool{}
+		archiveNodes = map[string]bool{}
+		moniker = map[string]string{}
 		initialNode = nodeAddr
 		status, err := FetchStatus(nodeAddr)
 		if err != nil {
@@ -68,6 +42,7 @@ func CheckNode(nodeAddr string) {
 			return
 		}
 		initialChainID = status.Result.NodeInfo.Network
+		moniker[nodeAddr] = status.Result.NodeInfo.Moniker
 	}
 
 	// Skip if the node address is localhost and it's not the initial node
@@ -84,6 +59,7 @@ func CheckNode(nodeAddr string) {
 		CheckNodeGRPC(nodeAddr)
 		CheckNodeAPI(nodeAddr)
 		status, err := FetchStatus(nodeAddr)
+		moniker[nodeAddr] = status.Result.NodeInfo.Moniker
 		if err != nil {
 			fmt.Println("Failed to fetch status from", nodeAddr)
 			return
@@ -101,15 +77,11 @@ func CheckNode(nodeAddr string) {
 			return
 		}
 		// Add to successful nodes
-		successfulNodes.Lock()
-		successfulNodes.nodes[nodeAddr] = earliestBlockHeight
-		successfulNodes.Unlock()
-
+		earliest_block[nodeAddr] = earliestBlockHeight
+		rpc_addr[nodeAddr] = true
 		// If the node has block 1, it's an archive node
 		if earliestBlockHeight == 1 {
-			archiveNodes.Lock()
-			archiveNodes.nodes = append(archiveNodes.nodes, nodeAddr)
-			archiveNodes.Unlock()
+			archiveNodes[nodeAddr] = true
 		}
 
 	} else {
@@ -117,11 +89,10 @@ func CheckNode(nodeAddr string) {
 		CheckNodeGRPC(nodeAddr)
 		CheckNodeAPI(nodeAddr)
 		// Add to unsuccessful nodes
-		unsuccessfulNodes.Lock()
-		unsuccessfulNodes.nodes = append(unsuccessfulNodes.nodes, nodeAddr)
-		unsuccessfulNodes.Unlock()
+		rpc_addr[nodeAddr] = false
 		return
 	}
+
 	for _, peer := range netinfo.Result.Peers {
 		peer := peer
 		ProcessPeer(&peer)
@@ -137,16 +108,12 @@ func CheckNodeGRPC(nodeAddr string) {
 		fmt.Println("Got node info GRPC from", nodeAddrGRPC)
 
 		// Add to successful nodes
-		successfulNodesGRPC.Lock()
-		successfulNodesGRPC.nodes = append(successfulNodesGRPC.nodes, nodeAddrGRPC)
-		successfulNodesGRPC.Unlock()
+		grpc_addr[nodeAddr] = true
 	} else {
 		fmt.Println("Failed to fetch node info GRPC from", nodeAddrGRPC)
 
 		// Add to unsuccessful nodes
-		unsuccessfulNodesGRPC.Lock()
-		unsuccessfulNodesGRPC.nodes = append(unsuccessfulNodesGRPC.nodes, nodeAddrGRPC)
-		unsuccessfulNodesGRPC.Unlock()
+		grpc_addr[nodeAddr] = false
 	}
 }
 
@@ -157,15 +124,11 @@ func CheckNodeAPI(nodeAddr string) {
 		fmt.Println("Got node info from", nodeAddrAPI)
 
 		// Add to successful nodes
-		successfulNodesAPI.Lock()
-		successfulNodesAPI.nodes = append(successfulNodesAPI.nodes, nodeAddrAPI)
-		successfulNodesAPI.Unlock()
+		api_addr[nodeAddr] = true
 	} else {
 		fmt.Println("Failed to fetch node info from", nodeAddrAPI)
 
 		// Add to unsuccessful nodes
-		unsuccessfulNodesAPI.Lock()
-		unsuccessfulNodesAPI.nodes = append(unsuccessfulNodesAPI.nodes, nodeAddrAPI)
-		unsuccessfulNodesAPI.Unlock()
+		api_addr[nodeAddr] = false
 	}
 }

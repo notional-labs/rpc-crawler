@@ -19,6 +19,7 @@ type StatusResponse struct {
 	Result struct {
 		NodeInfo struct {
 			Network string `json:"network"`
+			Moniker string `json:"moniker"`
 		} `json:"node_info"`
 		SyncInfo struct {
 			EarliestBlockHeight string `json:"earliest_block_height"`

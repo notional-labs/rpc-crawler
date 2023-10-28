@@ -57,18 +57,60 @@ func BuildRPCAddress(peer *types.Peer) string {
 	return rpcAddr
 }
 
-func WriteSectionToToml(file *os.File, sectionName string, nodes map[string]int) {
-	_, err := file.WriteString(fmt.Sprintf("%s = {\n", sectionName))
+func WriteSectionToToml(file *os.File, nodeAddr string) {
+	nodeAddrGRPC = strings.Replace(nodeAddr, "26657", "9090", 1)
+	nodeAddrGRPC = strings.Replace(nodeAddrGRPC, "http://", "", 1)
+	nodeAddrGRPC = strings.Replace(nodeAddrGRPC, "https://", "", 1)
+	nodeAddrAPI = strings.Replace(nodeAddr, "26657", "1317", 1)
+	_, err := file.WriteString(fmt.Sprintf("Starting node = %s \n", nodeAddr))
+	if err != nil {
+		fmt.Println("cannot write starting node to toml file")
+	}
+	_, err = file.WriteString(fmt.Sprintf("%s = [\n", moniker[nodeAddr]))
 	if err != nil {
 		fmt.Println("cannot write section to toml file")
 	}
-	for node, blockHeight := range nodes {
-		_, err = file.WriteString(fmt.Sprintf("    \"%s\": \"%d\",\n", node, blockHeight))
-		if err != nil {
-			fmt.Println("cannot write node to toml file")
-		}
+	_, err = file.WriteString(fmt.Sprintf("    earliest_block = \"%d\",\n", earliest_block[nodeAddr]))
+	if err != nil {
+		fmt.Println("cannot write node to toml file")
 	}
-	_, err = file.WriteString("}\n\n")
+	rpc := "unsuccessful"
+	if rpc_addr[nodeAddr] {
+		rpc = "successful"
+	}
+	grpc := "unsuccessful"
+	if grpc_addr[nodeAddr] {
+		grpc = "successful"
+	}
+	api := "unsuccessful"
+	if api_addr[nodeAddr] {
+		api = "successful"
+	}
+	_, err = file.WriteString(fmt.Sprintf("    rpc = \"%s\",\n", nodeAddr))
+	if err != nil {
+		fmt.Println("cannot write node to toml file")
+	}
+	_, err = file.WriteString(fmt.Sprintf("    rpc_status = \"%s\",\n", rpc))
+	if err != nil {
+		fmt.Println("cannot write node to toml file")
+	}
+	_, err = file.WriteString(fmt.Sprintf("    grpc = \"%s\",\n", nodeAddrGRPC))
+	if err != nil {
+		fmt.Println("cannot write node to toml file")
+	}
+	_, err = file.WriteString(fmt.Sprintf("    grpc_status = \"%s\",\n", grpc))
+	if err != nil {
+		fmt.Println("cannot write node to toml file")
+	}
+	_, err = file.WriteString(fmt.Sprintf("    api = \"%s\",\n", nodeAddrAPI))
+	if err != nil {
+		fmt.Println("cannot write node to toml file")
+	}
+	_, err = file.WriteString(fmt.Sprintf("    api_status = \"%s\",\n", api))
+	if err != nil {
+		fmt.Println("cannot write node to toml file")
+	}
+	_, err = file.WriteString("]\n\n")
 	if err != nil {
 		fmt.Println("cannot write escape sequence to toml file")
 	}
@@ -189,32 +231,37 @@ func WriteNodesToToml(initialNode string) {
 	}
 
 	// Write sections to the file
-	WriteSectionToToml(file, "successfulNodes", successfulNodes.nodes)
-	WriteSectionToTomlSlice(file, "unsuccessfulNodes", unsuccessfulNodes.nodes)
-	WriteSectionToTomlSlice(file, "archiveNodes", archiveNodes.nodes)
+	for key := range rpc_addr {
+		WriteSectionToToml(file, key)
+	}
 
-	// Write sections to the file
-	WriteSectionToTomlSlice(file, "successfulNodesGRPC", successfulNodesGRPC.nodes)
-	WriteSectionToTomlSlice(file, "unsuccessfulNodesGRPC", unsuccessfulNodesGRPC.nodes)
-	WriteSectionToTomlSlice(file, "successfulNodesAPI", successfulNodesAPI.nodes)
-	WriteSectionToTomlSlice(file, "unsuccessfulNodesAPI", unsuccessfulNodesAPI.nodes)
+	WriteSectionToTomlSlice(file, "successfulRPCNodes", rpc_addr, true)
+	WriteSectionToTomlSlice(file, "unsuccessfulRPCNodes", rpc_addr, false)
+	WriteSectionToTomlSlice(file, "successfulGRPCNodes", grpc_addr, true)
+	WriteSectionToTomlSlice(file, "unsuccessfulGRPCNodes", grpc_addr, false)
+	WriteSectionToTomlSlice(file, "successfulAPINodes", api_addr, true)
+	WriteSectionToTomlSlice(file, "unsuccessfulAPINodes", api_addr, false)
 
 	fmt.Println(".toml file created with node details.")
 }
 
-func WriteSectionToTomlSlice(file *os.File, sectionName string, nodes []string) {
+func WriteSectionToTomlSlice(file *os.File, sectionName string, nodes map[string]bool, status bool) {
 	_, err := file.WriteString(fmt.Sprintf("%s = [\n", sectionName))
 	if err != nil {
-		fmt.Println("cannot write section to toml file")
+		fmt.Println("cannot write node to toml file")
 	}
-	for _, node := range nodes {
-		_, err = file.WriteString(fmt.Sprintf("    \"%s\",\n", node))
-		if err != nil {
-			fmt.Println("cannot write node to toml file")
+
+	for key, val := range nodes {
+		if val == status {
+			_, err = file.WriteString(fmt.Sprintf("    %s\n", key))
+			if err != nil {
+				fmt.Println("cannot write node to toml file")
+			}
 		}
 	}
-	_, err = file.WriteString("]\n\n")
+
+	_, err = file.WriteString(fmt.Sprintf("]\n"))
 	if err != nil {
-		fmt.Println("cannot write escape sequence to toml file")
+		fmt.Println("cannot write node to toml file")
 	}
 }
