@@ -68,7 +68,7 @@ func CheckNode(nodeAddr string) {
 			return
 		}
 		status := client.Result.SyncInfo
-		initialChainID = 
+		initialChainID = status.chain_id
 	}
 
 	// Skip if the node address is localhost and it's not the initial node

@@ -74,7 +74,7 @@ func ProcessPeer(peer coretypes.Peer) {
 		go func(peer coretypes.Peer) {
 			if !IsNodeVisited(peer.NodeInfo.Other.RPCAddress) {
 				MarkNodeAsVisited(peer.NodeInfo.Other.RPCAddress)
-				ProcessPeer(&peer)
+				ProcessPeer(peer)
 			}
 		}(peer)
 	}
