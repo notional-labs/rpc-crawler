@@ -1,55 +1,22 @@
 package lib
 
 import (
+	"context"
 	"fmt"
-	"strconv"
 	"strings"
-	"sync"
 )
 
-var initialChainID string
-
-var archiveNodes = struct {
-	sync.RWMutex
-	nodes []string
-}{nodes: []string{}}
-
 var (
+	earliestBlock     map[string]int
+	rpcAddr           map[string]bool
+	grpcAddr          map[string]bool
+	apiAddr           map[string]bool
+	moniker           map[string]string
+	initialNode       string
+	nodeAddrGRPC      string
 	totalNodesChecked int
-	successfulNodes   = struct {
-		sync.RWMutex
-		nodes map[string]int
-	}{nodes: make(map[string]int)}
-)
-
-var unsuccessfulNodes = struct {
-	sync.RWMutex
-	nodes []string
-}{nodes: []string{}}
-
-var successfulNodesGRPC = struct {
-	sync.RWMutex
-	nodes []string
-}{nodes: []string{}}
-
-var unsuccessfulNodesGRPC = struct {
-	sync.RWMutex
-	nodes []string
-}{nodes: []string{}}
-
-var successfulNodesAPI = struct {
-	sync.RWMutex
-	nodes []string
-}{nodes: []string{}}
-
-var unsuccessfulNodesAPI = struct {
-	sync.RWMutex
-	nodes []string
-}{nodes: []string{}}
-
-var (
-	initialNode  string
-	nodeAddrGRPC string
+	initialChainID    string
+	archiveNodes      map[string]bool
 )
 
 func CheckNode(nodeAddr string) {
@@ -61,14 +28,26 @@ func CheckNode(nodeAddr string) {
 
 	// Check if the node is the initial node
 	if initialNode == "" {
+		earliestBlock = map[string]int{}
+		rpcAddr = map[string]bool{}
+		grpcAddr = map[string]bool{}
+		apiAddr = map[string]bool{}
+		archiveNodes = map[string]bool{}
+		moniker = map[string]string{}
 		initialNode = nodeAddr
 		client, err := FetchClient(nodeAddr)
 		if err != nil {
 			fmt.Println("Failed to fetch status from", nodeAddr)
 			return
 		}
-		status := client.Result.SyncInfo
-		initialChainID = status.chain_id
+		ctx := context.TODO()
+
+		status, err := client.Status(ctx)
+		if err != nil {
+			fmt.Println("cannot fetch status")
+		}
+		initialChainID = status.NodeInfo.Network
+		moniker[nodeAddr] = status.NodeInfo.Moniker
 	}
 
 	// Skip if the node address is localhost and it's not the initial node
@@ -79,51 +58,49 @@ func CheckNode(nodeAddr string) {
 	// Increment total nodes
 	totalNodesChecked++
 
-	netinfo, err := FetchNetInfo(nodeAddr)
+	client, err := FetchClient(nodeAddr)
+	if err != nil {
+		fmt.Println("Failed to fetch status from", nodeAddr)
+		return
+	}
+
+	netinfo, err := FetchNetInfo(client)
 	if err == nil {
 		fmt.Println("Got net info from", nodeAddr)
 		CheckNodeGRPC(nodeAddr)
-		CheckNodeAPI(nodeAddr)
-		client, err := FetchClient(nodeAddr)
+
+		ctx := context.TODO()
+
+		status, err := client.Status(ctx)
+		moniker[nodeAddr] = status.NodeInfo.Moniker
 		if err != nil {
 			fmt.Println("Failed to fetch client from", nodeAddr)
 			return
 		}
 
 		// Verify chain_id
-		if client.Result.NodeInfo.Network != initialChainID {
+		if status.NodeInfo.Network != initialChainID {
 			fmt.Println("Node", nodeAddr, "is on a different chain_id")
 			return
 		}
 
-		// Record the earliest block height
-		earliestBlockHeight, err := strconv.Atoi(client.SyncInfo.EarliestBlockHeight)
-		if err != nil {
-			return
-		}
 		// Add to successful nodes
-		successfulNodes.Lock()
-		successfulNodes.nodes[nodeAddr] = earliestBlockHeight
-		successfulNodes.Unlock()
-
+		earliestBlock[nodeAddr] = int(status.SyncInfo.EarliestBlockHeight)
+		rpcAddr[nodeAddr] = true
 		// If the node has block 1, it's an archive node
-		if earliestBlockHeight == 1 {
-			archiveNodes.Lock()
-			archiveNodes.nodes = append(archiveNodes.nodes, nodeAddr)
-			archiveNodes.Unlock()
+		if int(status.SyncInfo.EarliestBlockHeight) == 1 {
+			archiveNodes[nodeAddr] = true
 		}
 
 	} else {
 		fmt.Println("Failed to fetch net_info from", nodeAddr)
 		CheckNodeGRPC(nodeAddr)
-		CheckNodeAPI(nodeAddr)
 		// Add to unsuccessful nodes
-		unsuccessfulNodes.Lock()
-		unsuccessfulNodes.nodes = append(unsuccessfulNodes.nodes, nodeAddr)
-		unsuccessfulNodes.Unlock()
+		rpcAddr[nodeAddr] = false
 		return
 	}
 	for _, peer := range netinfo.Peers {
+
 		peer := peer
 		ProcessPeer(peer)
 	}
@@ -138,35 +115,11 @@ func CheckNodeGRPC(nodeAddr string) {
 		fmt.Println("Got node info GRPC from", nodeAddrGRPC)
 
 		// Add to successful nodes
-		successfulNodesGRPC.Lock()
-		successfulNodesGRPC.nodes = append(successfulNodesGRPC.nodes, nodeAddrGRPC)
-		successfulNodesGRPC.Unlock()
+		grpcAddr[nodeAddr] = true
 	} else {
 		fmt.Println("Failed to fetch node info GRPC from", nodeAddrGRPC)
 
 		// Add to unsuccessful nodes
-		unsuccessfulNodesGRPC.Lock()
-		unsuccessfulNodesGRPC.nodes = append(unsuccessfulNodesGRPC.nodes, nodeAddrGRPC)
-		unsuccessfulNodesGRPC.Unlock()
-	}
-}
-
-func CheckNodeAPI(nodeAddr string) {
-	nodeAddrAPI := strings.Replace(nodeAddr, "26657", "1317", 1)
-	err := FetchNodeInfoAPI(nodeAddrAPI)
-	if err == nil {
-		fmt.Println("Got node info from", nodeAddrAPI)
-
-		// Add to successful nodes
-		successfulNodesAPI.Lock()
-		successfulNodesAPI.nodes = append(successfulNodesAPI.nodes, nodeAddrAPI)
-		successfulNodesAPI.Unlock()
-	} else {
-		fmt.Println("Failed to fetch node info from", nodeAddrAPI)
-
-		// Add to unsuccessful nodes
-		unsuccessfulNodesAPI.Lock()
-		unsuccessfulNodesAPI.nodes = append(unsuccessfulNodesAPI.nodes, nodeAddrAPI)
-		unsuccessfulNodesAPI.Unlock()
+		grpcAddr[nodeAddr] = false
 	}
 }
