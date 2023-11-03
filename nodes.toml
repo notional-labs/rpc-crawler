@@ -1,26 +1,227 @@
 [sourceNode]
-node = "http://sentry-01.hosts.testnet.cudos.org:26657"
+node = "http://34.121.154.165:26657"
 
-totalNodesChecked = 0
+totalNodesChecked = 21
 
-successfulNodes = {
-}
-
-unsuccessfulNodes = [
+[explorer-v2-sentry]
+    earliest_block = "3603400",
+    rpc = "http://34.121.154.165:26657",
+    rpc_status = "successful",
+    grpc = "34.121.154.165:9090",
+    grpc_status = "successful",
 ]
 
-archiveNodes = [
+[default]
+    earliest_block = "0",
+    rpc = "http://185.247.207.17:26657",
+    rpc_status = "unsuccessful",
+    grpc = "185.247.207.17:9090",
+    grpc_status = "unsuccessful",
 ]
 
-successfulNodesGRPC = [
+[default]
+    earliest_block = "0",
+    rpc = "http://185.247.207.13:26657",
+    rpc_status = "unsuccessful",
+    grpc = "185.247.207.13:9090",
+    grpc_status = "unsuccessful",
 ]
 
-unsuccessfulNodesGRPC = [
+[default]
+    earliest_block = "0",
+    rpc = "http://84.45.68.62:26657",
+    rpc_status = "unsuccessful",
+    grpc = "84.45.68.62:9090",
+    grpc_status = "unsuccessful",
 ]
 
-successfulNodesAPI = [
+[default]
+    earliest_block = "0",
+    rpc = "http://185.247.207.9:26657",
+    rpc_status = "unsuccessful",
+    grpc = "185.247.207.9:9090",
+    grpc_status = "unsuccessful",
 ]
 
-unsuccessfulNodesAPI = [
+[default]
+    earliest_block = "0",
+    rpc = "http://185.247.207.14:26657",
+    rpc_status = "unsuccessful",
+    grpc = "185.247.207.14:9090",
+    grpc_status = "unsuccessful",
 ]
 
+[default]
+    earliest_block = "0",
+    rpc = "http://185.247.207.10:26657",
+    rpc_status = "unsuccessful",
+    grpc = "185.247.207.10:9090",
+    grpc_status = "successful",
+]
+
+[default]
+    earliest_block = "0",
+    rpc = "http://185.247.207.32:26657",
+    rpc_status = "unsuccessful",
+    grpc = "185.247.207.32:9090",
+    grpc_status = "unsuccessful",
+]
+
+[default]
+    earliest_block = "0",
+    rpc = "http://162.55.98.45:26657",
+    rpc_status = "unsuccessful",
+    grpc = "162.55.98.45:9090",
+    grpc_status = "unsuccessful",
+]
+
+[default]
+    earliest_block = "0",
+    rpc = "http://185.247.207.8:26657",
+    rpc_status = "unsuccessful",
+    grpc = "185.247.207.8:9090",
+    grpc_status = "unsuccessful",
+]
+
+[default]
+    earliest_block = "0",
+    rpc = "http://84.45.68.9:26657",
+    rpc_status = "unsuccessful",
+    grpc = "84.45.68.9:9090",
+    grpc_status = "unsuccessful",
+]
+
+[default]
+    earliest_block = "0",
+    rpc = "http://185.247.207.12:26657",
+    rpc_status = "unsuccessful",
+    grpc = "185.247.207.12:9090",
+    grpc_status = "unsuccessful",
+]
+
+[default]
+    earliest_block = "0",
+    rpc = "http://93.151.164.241:26657",
+    rpc_status = "unsuccessful",
+    grpc = "93.151.164.241:9090",
+    grpc_status = "unsuccessful",
+]
+
+[default]
+    earliest_block = "0",
+    rpc = "http://34.66.10.69:26657",
+    rpc_status = "unsuccessful",
+    grpc = "34.66.10.69:9090",
+    grpc_status = "unsuccessful",
+]
+
+[default]
+    earliest_block = "0",
+    rpc = "http://195.3.220.52:26657",
+    rpc_status = "unsuccessful",
+    grpc = "195.3.220.52:9090",
+    grpc_status = "unsuccessful",
+]
+
+[default]
+    earliest_block = "0",
+    rpc = "http://62.31.255.182:26657",
+    rpc_status = "unsuccessful",
+    grpc = "62.31.255.182:9090",
+    grpc_status = "unsuccessful",
+]
+
+[default]
+    earliest_block = "0",
+    rpc = "http://86.27.197.205:26657",
+    rpc_status = "unsuccessful",
+    grpc = "86.27.197.205:9090",
+    grpc_status = "unsuccessful",
+]
+
+[Mercury]
+    earliest_block = "3603400",
+    rpc = "http://23.88.103.131:26657",
+    rpc_status = "successful",
+    grpc = "23.88.103.131:9090",
+    grpc_status = "successful",
+]
+
+[default]
+    earliest_block = "0",
+    rpc = "http://34.140.73.204:26657",
+    rpc_status = "unsuccessful",
+    grpc = "34.140.73.204:9090",
+    grpc_status = "unsuccessful",
+]
+
+[default]
+    earliest_block = "0",
+    rpc = "http://62.31.255.181:26657",
+    rpc_status = "unsuccessful",
+    grpc = "62.31.255.181:9090",
+    grpc_status = "unsuccessful",
+]
+
+[default]
+    earliest_block = "0",
+    rpc = "http://185.247.207.11:26657",
+    rpc_status = "unsuccessful",
+    grpc = "185.247.207.11:9090",
+    grpc_status = "unsuccessful",
+]
+
+successfulRPCNodes = [
+    http://23.88.103.131:26657
+    http://34.121.154.165:26657
+]
+unsuccessfulRPCNodes = [
+    http://185.247.207.11:26657
+    http://34.140.73.204:26657
+    http://62.31.255.181:26657
+    http://185.247.207.17:26657
+    http://185.247.207.13:26657
+    http://185.247.207.8:26657
+    http://84.45.68.9:26657
+    http://84.45.68.62:26657
+    http://185.247.207.9:26657
+    http://185.247.207.14:26657
+    http://185.247.207.10:26657
+    http://185.247.207.32:26657
+    http://162.55.98.45:26657
+    http://185.247.207.12:26657
+    http://93.151.164.241:26657
+    http://86.27.197.205:26657
+    http://34.66.10.69:26657
+    http://195.3.220.52:26657
+    http://62.31.255.182:26657
+]
+successfulGRPCNodes = [
+    http://185.247.207.10:26657
+    http://34.121.154.165:26657
+    http://23.88.103.131:26657
+]
+unsuccessfulGRPCNodes = [
+    http://195.3.220.52:26657
+    http://34.140.73.204:26657
+    http://185.247.207.8:26657
+    http://185.247.207.13:26657
+    http://185.247.207.12:26657
+    http://185.247.207.14:26657
+    http://162.55.98.45:26657
+    http://185.247.207.32:26657
+    http://185.247.207.9:26657
+    http://62.31.255.182:26657
+    http://62.31.255.181:26657
+    http://86.27.197.205:26657
+    http://185.247.207.11:26657
+    http://93.151.164.241:26657
+    http://84.45.68.9:26657
+    http://84.45.68.62:26657
+    http://185.247.207.17:26657
+    http://34.66.10.69:26657
+]
+successfulAPINodes = [
+]
+unsuccessfulAPINodes = [
+]
