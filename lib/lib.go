@@ -22,7 +22,7 @@ var visited = struct {
 }{nodes: make(map[string]bool)}
 
 func FetchClient(nodeAddr string) (client *http.HTTP, err error) {
-	client, err = http.New(nodeAddr, "websocket")
+	client, err = http.NewWithTimeout(nodeAddr, "websocket", 500)
 	if err != nil {
 		return nil, err
 	}
