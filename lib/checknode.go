@@ -2,8 +2,12 @@ package lib
 
 import (
 	"context"
-	"fmt"
 	"strings"
+	"sync"
+	"time"
+
+	coretypes "github.com/cometbft/cometbft/rpc/core/types"
+	"github.com/fatih/color"
 )
 
 var (
@@ -35,13 +39,13 @@ func CheckNode(nodeAddr string) {
 		initialNode = nodeAddr
 		client, err := FetchClient(nodeAddr)
 		if err != nil {
-			fmt.Println("Failed to fetch status from", nodeAddr)
+			color.Red("[%s] Failed to fetch status from %s\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddr)
 			return
 		}
 		ctx := context.TODO()
 		status, err := client.Status(ctx)
 		if err != nil {
-			fmt.Println("cannot fetch status")
+			color.Red("[%s] cannot fetch status\n", time.Now().Format("2006-01-02 15:04:05"))
 		}
 		initialChainID = status.NodeInfo.Network
 		moniker[nodeAddr] = status.NodeInfo.Moniker
@@ -54,23 +58,23 @@ func CheckNode(nodeAddr string) {
 	totalNodesChecked++
 	client, err := FetchClient(nodeAddr)
 	if err != nil {
-		fmt.Println("Failed to fetch status from", nodeAddr)
+		color.Red("[%s] Failed to fetch status from %s\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddr)
 		return
 	}
 	netinfo, err := FetchNetInfo(client)
 	if err == nil {
-		fmt.Println("Got net info from", nodeAddr)
+		color.Green("[%s] Got net info from %s\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddr)
 		CheckNodeGRPC(nodeAddr)
 		ctx := context.TODO()
 		status, err := client.Status(ctx)
 		moniker[nodeAddr] = status.NodeInfo.Moniker
 		if err != nil {
-			fmt.Println("Failed to fetch client from", nodeAddr)
+			color.Red("[%s] Failed to fetch client from %s\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddr)
 			return
 		}
 		// Verify chain_id
 		if status.NodeInfo.Network != initialChainID {
-			fmt.Println("Node", nodeAddr, "is on a different chain_id")
+			color.Red("[%s] Node %s is on a different chain_id\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddr)
 			return
 		}
 		// Add to successful nodes
@@ -80,16 +84,21 @@ func CheckNode(nodeAddr string) {
 		if int(status.SyncInfo.EarliestBlockHeight) == 1 {
 			archiveNodes[nodeAddr] = true
 		}
+		var wg sync.WaitGroup
+		for _, peer := range netinfo.Peers {
+			wg.Add(1)
+			go func(peer coretypes.Peer) {
+				defer wg.Done()
+				ProcessPeer(peer)
+			}(peer)
+		}
+		wg.Wait()
 	} else {
-		fmt.Println("Failed to fetch net_info from", nodeAddr)
+		color.Red("[%s] Failed to fetch net_info from %s\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddr)
 		CheckNodeGRPC(nodeAddr)
 		// Add to unsuccessful nodes
 		rpcAddr[nodeAddr] = false
 		return
-	}
-	for _, peer := range netinfo.Peers {
-		peer := peer
-		ProcessPeer(peer)
 	}
 }
 
@@ -99,11 +108,11 @@ func CheckNodeGRPC(nodeAddr string) {
 	nodeAddrGRPC = strings.Replace(nodeAddrGRPC, "https://", "", 1)
 	err := FetchNodeInfoGRPC(nodeAddrGRPC)
 	if err == nil {
-		fmt.Println("Got node info GRPC from", nodeAddrGRPC)
+		color.Green("[%s] Got node info GRPC from %s\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddrGRPC)
 		// Add to successful nodes
 		grpcAddr[nodeAddr] = true
 	} else {
-		fmt.Println("Failed to fetch node info GRPC from", nodeAddrGRPC)
+		color.Red("[%s] Failed to fetch node info GRPC from %s\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddrGRPC)
 		// Add to unsuccessful nodes
 		grpcAddr[nodeAddr] = false
 	}

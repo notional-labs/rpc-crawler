@@ -1,227 +1,1562 @@
-[sourceNode]
-node = "http://34.121.154.165:26657"
+source_node = "https://r-terra--a1f4bb74a50728120e4f8c8054a8bb4c.gw.notionalapi.net:443"
 
-totalNodesChecked = 21
+total_nodes_checked = 154
 
-[explorer-v2-sentry]
-    earliest_block = "3603400",
-    rpc = "http://34.121.154.165:26657",
-    rpc_status = "successful",
-    grpc = "34.121.154.165:9090",
-    grpc_status = "successful",
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://51.222.10.128:26657"
+rpc_status = "unsuccessful"
+grpc = "51.222.10.128:9090"
+grpc_status = "successful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://23.88.66.187:26657"
+rpc_status = "unsuccessful"
+grpc = "23.88.66.187:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://18.183.203.5:26657"
+rpc_status = "unsuccessful"
+grpc = "18.183.203.5:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "SP"
+earliest_block = 14639495
+rpc = "http://213.246.39.167:26657"
+rpc_status = "successful"
+grpc = "213.246.39.167:9090"
+grpc_status = "successful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://65.109.106.164:26657"
+rpc_status = "unsuccessful"
+grpc = "65.109.106.164:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://195.201.63.87:26657"
+rpc_status = "unsuccessful"
+grpc = "195.201.63.87:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://54.199.153.43:26657"
+rpc_status = "unsuccessful"
+grpc = "54.199.153.43:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "cp-test"
+earliest_block = 16423473
+rpc = "http://65.21.134.243:26673"
+rpc_status = "successful"
+grpc = "65.21.134.243:26673"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://103.241.24.66:26657"
+rpc_status = "unsuccessful"
+grpc = "103.241.24.66:9090"
+grpc_status = "successful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://172.255.98.36:36657"
+rpc_status = "unsuccessful"
+grpc = "172.255.98.36:36657"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "sanctions"
+earliest_block = 16099854
+rpc = "http://168.119.75.88:26657"
+rpc_status = "successful"
+grpc = "168.119.75.88:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://157.90.212.31:26657"
+rpc_status = "unsuccessful"
+grpc = "157.90.212.31:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://103.87.94.132:26657"
+rpc_status = "unsuccessful"
+grpc = "103.87.94.132:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "node"
+earliest_block = 16481090
+rpc = "http://136.243.88.91:1421"
+rpc_status = "successful"
+grpc = "136.243.88.91:1421"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://54.199.229.124:26657"
+rpc_status = "unsuccessful"
+grpc = "54.199.229.124:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://142.132.193.150:26657"
+rpc_status = "unsuccessful"
+grpc = "142.132.193.150:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://34.249.177.43:26657"
+rpc_status = "unsuccessful"
+grpc = "34.249.177.43:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://13.213.121.179:26657"
+rpc_status = "unsuccessful"
+grpc = "13.213.121.179:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://169.155.168.155:26657"
+rpc_status = "unsuccessful"
+grpc = "169.155.168.155:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://13.209.60.161:26657"
+rpc_status = "unsuccessful"
+grpc = "13.209.60.161:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://47.242.54.248:26657"
+rpc_status = "unsuccessful"
+grpc = "47.242.54.248:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "frag_node"
+earliest_block = 16972322
+rpc = "http://51.222.11.146:26657"
+rpc_status = "successful"
+grpc = "51.222.11.146:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://178.162.165.203:26657"
+rpc_status = "unsuccessful"
+grpc = "178.162.165.203:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://65.109.93.35:61657"
+rpc_status = "unsuccessful"
+grpc = "65.109.93.35:61657"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://35.161.85.155:26657"
+rpc_status = "unsuccessful"
+grpc = "35.161.85.155:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "tera-bitz"
+earliest_block = 14513401
+rpc = "http://81.183.230.170:26657"
+rpc_status = "successful"
+grpc = "81.183.230.170:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://34.87.32.135:26657"
+rpc_status = "unsuccessful"
+grpc = "34.87.32.135:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://103.234.71.245:26657"
+rpc_status = "unsuccessful"
+grpc = "103.234.71.245:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://65.108.97.229:26657"
+rpc_status = "unsuccessful"
+grpc = "65.108.97.229:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://212.32.245.96:26657"
+rpc_status = "unsuccessful"
+grpc = "212.32.245.96:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://68.206.160.142:26657"
+rpc_status = "unsuccessful"
+grpc = "68.206.160.142:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://88.198.35.12:26657"
+rpc_status = "unsuccessful"
+grpc = "88.198.35.12:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://65.109.182.72:36657"
+rpc_status = "unsuccessful"
+grpc = "65.109.182.72:36657"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://89.149.218.95:26657"
+rpc_status = "unsuccessful"
+grpc = "89.149.218.95:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://65.108.209.115:26657"
+rpc_status = "unsuccessful"
+grpc = "65.108.209.115:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://65.109.92.72:26657"
+rpc_status = "unsuccessful"
+grpc = "65.109.92.72:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://168.119.138.109:26657"
+rpc_status = "unsuccessful"
+grpc = "168.119.138.109:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://10.254.254.92:26657"
+rpc_status = "unsuccessful"
+grpc = "10.254.254.92:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://141.95.145.63:26657"
+rpc_status = "unsuccessful"
+grpc = "141.95.145.63:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://173.234.26.146:27004"
+rpc_status = "unsuccessful"
+grpc = "173.234.26.146:27004"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://15.235.42.151:26668"
+rpc_status = "unsuccessful"
+grpc = "15.235.42.151:26668"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "OneStar"
+earliest_block = 14639495
+rpc = "http://136.243.82.69:26657"
+rpc_status = "successful"
+grpc = "136.243.82.69:9090"
+grpc_status = "successful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://65.108.232.150:26657"
+rpc_status = "unsuccessful"
+grpc = "65.108.232.150:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://152.53.21.159:26657"
+rpc_status = "unsuccessful"
+grpc = "152.53.21.159:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://136.243.40.22:26657"
+rpc_status = "unsuccessful"
+grpc = "136.243.40.22:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "w2c0ooF1Mr"
+earliest_block = 14639495
+rpc = "http://167.114.172.227:26657"
+rpc_status = "successful"
+grpc = "167.114.172.227:9090"
+grpc_status = "successful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://142.132.205.94:26657"
+rpc_status = "unsuccessful"
+grpc = "142.132.205.94:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://80.190.129.50:26657"
+rpc_status = "unsuccessful"
+grpc = "80.190.129.50:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://10.133.0.65:26657"
+rpc_status = "unsuccessful"
+grpc = "10.133.0.65:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://169.155.45.74:26657"
+rpc_status = "unsuccessful"
+grpc = "169.155.45.74:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://164.132.200.52:26657"
+rpc_status = "unsuccessful"
+grpc = "164.132.200.52:9090"
+grpc_status = "successful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://195.14.6.2:26657"
+rpc_status = "unsuccessful"
+grpc = "195.14.6.2:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://135.181.18.206:26657"
+rpc_status = "unsuccessful"
+grpc = "135.181.18.206:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://44.214.37.79:26657"
+rpc_status = "unsuccessful"
+grpc = "44.214.37.79:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://169.155.44.125:26657"
+rpc_status = "unsuccessful"
+grpc = "169.155.44.125:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "coinbevy"
+earliest_block = 8966776
+rpc = "http://155.138.150.217:26657"
+rpc_status = "successful"
+grpc = "155.138.150.217:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://169.155.47.207:26657"
+rpc_status = "unsuccessful"
+grpc = "169.155.47.207:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://47.251.3.223:26657"
+rpc_status = "unsuccessful"
+grpc = "47.251.3.223:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "terra1"
+earliest_block = 14639495
+rpc = "http://116.202.224.210:26657"
+rpc_status = "successful"
+grpc = "116.202.224.210:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://213.32.7.59:26657"
+rpc_status = "unsuccessful"
+grpc = "213.32.7.59:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://65.108.6.121:26677"
+rpc_status = "unsuccessful"
+grpc = "65.108.6.121:26677"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://185.16.39.158:26657"
+rpc_status = "unsuccessful"
+grpc = "185.16.39.158:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://85.244.128.10:26657"
+rpc_status = "unsuccessful"
+grpc = "85.244.128.10:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://47.147.226.147:38657"
+rpc_status = "unsuccessful"
+grpc = "47.147.226.147:38657"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://169.155.46.88:26657"
+rpc_status = "unsuccessful"
+grpc = "169.155.46.88:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://51.103.108.114:26657"
+rpc_status = "unsuccessful"
+grpc = "51.103.108.114:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://65.108.74.96:26657"
+rpc_status = "unsuccessful"
+grpc = "65.108.74.96:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://37.122.252.18:26657"
+rpc_status = "unsuccessful"
+grpc = "37.122.252.18:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://185.16.39.137:26657"
+rpc_status = "unsuccessful"
+grpc = "185.16.39.137:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://23.224.235.122:26657"
+rpc_status = "unsuccessful"
+grpc = "23.224.235.122:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://5.10.19.53:26657"
+rpc_status = "unsuccessful"
+grpc = "5.10.19.53:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://51.83.238.114:26657"
+rpc_status = "unsuccessful"
+grpc = "51.83.238.114:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://65.109.96.173:26657"
+rpc_status = "unsuccessful"
+grpc = "65.109.96.173:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://65.21.196.250:26657"
+rpc_status = "unsuccessful"
+grpc = "65.21.196.250:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://169.155.46.196:26657"
+rpc_status = "unsuccessful"
+grpc = "169.155.46.196:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://93.115.25.15:26659"
+rpc_status = "unsuccessful"
+grpc = "93.115.25.15:26659"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://95.214.53.215:26657"
+rpc_status = "unsuccessful"
+grpc = "95.214.53.215:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://88.198.12.91:26657"
+rpc_status = "unsuccessful"
+grpc = "88.198.12.91:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://35.179.76.165:26657"
+rpc_status = "unsuccessful"
+grpc = "35.179.76.165:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://148.113.8.138:26657"
+rpc_status = "unsuccessful"
+grpc = "148.113.8.138:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://135.181.141.100:26657"
+rpc_status = "unsuccessful"
+grpc = "135.181.141.100:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://89.149.218.60:26657"
+rpc_status = "unsuccessful"
+grpc = "89.149.218.60:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://18.180.93.129:26657"
+rpc_status = "unsuccessful"
+grpc = "18.180.93.129:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://20.76.242.200:26657"
+rpc_status = "unsuccessful"
+grpc = "20.76.242.200:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://3.112.138.57:26657"
+rpc_status = "unsuccessful"
+grpc = "3.112.138.57:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://135.125.189.12:26657"
+rpc_status = "unsuccessful"
+grpc = "135.125.189.12:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://164.152.163.83:26657"
+rpc_status = "unsuccessful"
+grpc = "164.152.163.83:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://54.229.85.145:26657"
+rpc_status = "unsuccessful"
+grpc = "54.229.85.145:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://20.31.165.114:26657"
+rpc_status = "unsuccessful"
+grpc = "20.31.165.114:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://35.78.176.215:26657"
+rpc_status = "unsuccessful"
+grpc = "35.78.176.215:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://162.19.58.101:26657"
+rpc_status = "unsuccessful"
+grpc = "162.19.58.101:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://162.55.97.44:26657"
+rpc_status = "unsuccessful"
+grpc = "162.55.97.44:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://142.132.251.243:26657"
+rpc_status = "unsuccessful"
+grpc = "142.132.251.243:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://212.23.222.183:26657"
+rpc_status = "unsuccessful"
+grpc = "212.23.222.183:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://46.137.227.37:8000"
+rpc_status = "unsuccessful"
+grpc = "46.137.227.37:8000"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://23.88.0.170:26657"
+rpc_status = "unsuccessful"
+grpc = "23.88.0.170:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://208.181.131.107:26657"
+rpc_status = "unsuccessful"
+grpc = "208.181.131.107:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://3.217.47.126:26657"
+rpc_status = "unsuccessful"
+grpc = "3.217.47.126:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://135.181.2.20:36657"
+rpc_status = "unsuccessful"
+grpc = "135.181.2.20:36657"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://54.74.229.47:26657"
+rpc_status = "unsuccessful"
+grpc = "54.74.229.47:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://135.125.67.229:26657"
+rpc_status = "unsuccessful"
+grpc = "135.125.67.229:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://54.218.152.11:26657"
+rpc_status = "unsuccessful"
+grpc = "54.218.152.11:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://74.118.136.119:26657"
+rpc_status = "unsuccessful"
+grpc = "74.118.136.119:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://74.80.183.130:27004"
+rpc_status = "unsuccessful"
+grpc = "74.80.183.130:27004"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://188.40.72.97:26657"
+rpc_status = "unsuccessful"
+grpc = "188.40.72.97:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://89.117.56.203:26657"
+rpc_status = "unsuccessful"
+grpc = "89.117.56.203:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://223.119.49.60:26657"
+rpc_status = "unsuccessful"
+grpc = "223.119.49.60:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://35.78.61.71:26657"
+rpc_status = "unsuccessful"
+grpc = "35.78.61.71:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://134.65.194.142:26657"
+rpc_status = "unsuccessful"
+grpc = "134.65.194.142:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://47.75.104.62:26657"
+rpc_status = "unsuccessful"
+grpc = "47.75.104.62:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://95.216.36.141:26657"
+rpc_status = "unsuccessful"
+grpc = "95.216.36.141:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://93.189.30.102:26657"
+rpc_status = "unsuccessful"
+grpc = "93.189.30.102:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://34.81.39.139:26657"
+rpc_status = "unsuccessful"
+grpc = "34.81.39.139:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://34.195.124.95:26657"
+rpc_status = "unsuccessful"
+grpc = "34.195.124.95:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://52.194.8.37:26657"
+rpc_status = "unsuccessful"
+grpc = "52.194.8.37:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://169.155.168.82:26657"
+rpc_status = "unsuccessful"
+grpc = "169.155.168.82:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://157.90.128.50:26657"
+rpc_status = "unsuccessful"
+grpc = "157.90.128.50:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://128.199.3.109:26657"
+rpc_status = "unsuccessful"
+grpc = "128.199.3.109:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://134.65.194.139:26657"
+rpc_status = "unsuccessful"
+grpc = "134.65.194.139:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://95.217.197.100:27004"
+rpc_status = "unsuccessful"
+grpc = "95.217.197.100:27004"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://185.181.103.140:26657"
+rpc_status = "unsuccessful"
+grpc = "185.181.103.140:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://134.65.192.182:26657"
+rpc_status = "unsuccessful"
+grpc = "134.65.192.182:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://88.198.5.137:26657"
+rpc_status = "unsuccessful"
+grpc = "88.198.5.137:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "test"
+earliest_block = 16931401
+rpc = "https://r-terra--a1f4bb74a50728120e4f8c8054a8bb4c.gw.notionalapi.net:443"
+rpc_status = "successful"
+grpc = "r-terra--a1f4bb74a50728120e4f8c8054a8bb4c.gw.notionalapi.net:443"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://35.212.211.176:26657"
+rpc_status = "unsuccessful"
+grpc = "35.212.211.176:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://86.111.48.95:26657"
+rpc_status = "unsuccessful"
+grpc = "86.111.48.95:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://88.99.30.118:26657"
+rpc_status = "unsuccessful"
+grpc = "88.99.30.118:9090"
+grpc_status = "successful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://51.79.231.89:26657"
+rpc_status = "unsuccessful"
+grpc = "51.79.231.89:9090"
+grpc_status = "successful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://85.10.192.155:26657"
+rpc_status = "unsuccessful"
+grpc = "85.10.192.155:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://82.217.63.115:26657"
+rpc_status = "unsuccessful"
+grpc = "82.217.63.115:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://82.113.38.40:26657"
+rpc_status = "unsuccessful"
+grpc = "82.113.38.40:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://52.73.168.104:26657"
+rpc_status = "unsuccessful"
+grpc = "52.73.168.104:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://65.108.82.247:26657"
+rpc_status = "unsuccessful"
+grpc = "65.108.82.247:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://169.155.169.137:26657"
+rpc_status = "unsuccessful"
+grpc = "169.155.169.137:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://18.235.35.236:26657"
+rpc_status = "unsuccessful"
+grpc = "18.235.35.236:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://51.210.154.21:26657"
+rpc_status = "unsuccessful"
+grpc = "51.210.154.21:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://57.128.22.71:26657"
+rpc_status = "unsuccessful"
+grpc = "57.128.22.71:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://95.217.122.252:26657"
+rpc_status = "unsuccessful"
+grpc = "95.217.122.252:9090"
+grpc_status = "successful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://218.102.97.67:26657"
+rpc_status = "unsuccessful"
+grpc = "218.102.97.67:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://5.9.97.174:26657"
+rpc_status = "unsuccessful"
+grpc = "5.9.97.174:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://162.55.3.28:26657"
+rpc_status = "unsuccessful"
+grpc = "162.55.3.28:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://10.254.254.80:26657"
+rpc_status = "unsuccessful"
+grpc = "10.254.254.80:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://52.198.63.225:26657"
+rpc_status = "unsuccessful"
+grpc = "52.198.63.225:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://164.152.161.131:26657"
+rpc_status = "unsuccessful"
+grpc = "164.152.161.131:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://3.109.149.102:26657"
+rpc_status = "unsuccessful"
+grpc = "3.109.149.102:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://157.90.129.15:26657"
+rpc_status = "unsuccessful"
+grpc = "157.90.129.15:9090"
+grpc_status = "successful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://135.181.19.45:26657"
+rpc_status = "unsuccessful"
+grpc = "135.181.19.45:9090"
+grpc_status = "successful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://65.108.35.20:26657"
+rpc_status = "unsuccessful"
+grpc = "65.108.35.20:9090"
+grpc_status = "successful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://162.19.18.115:26657"
+rpc_status = "unsuccessful"
+grpc = "162.19.18.115:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://153.139.245.106:26657"
+rpc_status = "unsuccessful"
+grpc = "153.139.245.106:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://46.4.78.177:26657"
+rpc_status = "unsuccessful"
+grpc = "46.4.78.177:9090"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://37.27.96.181:26641"
+rpc_status = "unsuccessful"
+grpc = "37.27.96.181:26641"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://10.254.254.84:36657"
+rpc_status = "unsuccessful"
+grpc = "10.254.254.84:36657"
+grpc_status = "unsuccessful"
+
+[[nodes]]
+name = "default"
+earliest_block = 0
+rpc = "http://113.99.98.81:26657"
+rpc_status = "unsuccessful"
+grpc = "113.99.98.81:9090"
+grpc_status = "unsuccessful"
+
+successful_rpc_nodes = [
+  "http://65.21.134.243:26673",
+  "http://136.243.88.91:1421",
+  "http://168.119.75.88:26657",
+  "http://51.222.11.146:26657",
+  "http://81.183.230.170:26657",
+  "http://136.243.82.69:26657",
+  "http://167.114.172.227:26657",
+  "http://116.202.224.210:26657",
+  "http://155.138.150.217:26657",
+  "https://r-terra--a1f4bb74a50728120e4f8c8054a8bb4c.gw.notionalapi.net:443",
+  "http://213.246.39.167:26657",
 ]
 
-[default]
-    earliest_block = "0",
-    rpc = "http://185.247.207.17:26657",
-    rpc_status = "unsuccessful",
-    grpc = "185.247.207.17:9090",
-    grpc_status = "unsuccessful",
+unsuccessful_rpc_nodes = [
+  "http://103.241.24.66:26657",
+  "http://172.255.98.36:36657",
+  "http://157.90.212.31:26657",
+  "http://103.87.94.132:26657",
+  "http://13.213.121.179:26657",
+  "http://169.155.168.155:26657",
+  "http://54.199.229.124:26657",
+  "http://142.132.193.150:26657",
+  "http://34.249.177.43:26657",
+  "http://13.209.60.161:26657",
+  "http://47.242.54.248:26657",
+  "http://178.162.165.203:26657",
+  "http://65.109.93.35:61657",
+  "http://35.161.85.155:26657",
+  "http://212.32.245.96:26657",
+  "http://34.87.32.135:26657",
+  "http://103.234.71.245:26657",
+  "http://65.108.97.229:26657",
+  "http://89.149.218.95:26657",
+  "http://65.108.209.115:26657",
+  "http://65.109.92.72:26657",
+  "http://168.119.138.109:26657",
+  "http://10.254.254.92:26657",
+  "http://68.206.160.142:26657",
+  "http://88.198.35.12:26657",
+  "http://65.109.182.72:36657",
+  "http://141.95.145.63:26657",
+  "http://173.234.26.146:27004",
+  "http://15.235.42.151:26668",
+  "http://65.108.232.150:26657",
+  "http://152.53.21.159:26657",
+  "http://136.243.40.22:26657",
+  "http://10.133.0.65:26657",
+  "http://142.132.205.94:26657",
+  "http://80.190.129.50:26657",
+  "http://135.181.18.206:26657",
+  "http://44.214.37.79:26657",
+  "http://169.155.44.125:26657",
+  "http://169.155.45.74:26657",
+  "http://164.132.200.52:26657",
+  "http://195.14.6.2:26657",
+  "http://169.155.47.207:26657",
+  "http://47.251.3.223:26657",
+  "http://85.244.128.10:26657",
+  "http://47.147.226.147:38657",
+  "http://169.155.46.88:26657",
+  "http://213.32.7.59:26657",
+  "http://65.108.6.121:26677",
+  "http://185.16.39.158:26657",
+  "http://185.16.39.137:26657",
+  "http://23.224.235.122:26657",
+  "http://5.10.19.53:26657",
+  "http://51.83.238.114:26657",
+  "http://51.103.108.114:26657",
+  "http://65.108.74.96:26657",
+  "http://37.122.252.18:26657",
+  "http://65.21.196.250:26657",
+  "http://65.109.96.173:26657",
+  "http://88.198.12.91:26657",
+  "http://35.179.76.165:26657",
+  "http://169.155.46.196:26657",
+  "http://93.115.25.15:26659",
+  "http://95.214.53.215:26657",
+  "http://18.180.93.129:26657",
+  "http://20.76.242.200:26657",
+  "http://3.112.138.57:26657",
+  "http://135.125.189.12:26657",
+  "http://164.152.163.83:26657",
+  "http://148.113.8.138:26657",
+  "http://135.181.141.100:26657",
+  "http://89.149.218.60:26657",
+  "http://20.31.165.114:26657",
+  "http://54.229.85.145:26657",
+  "http://142.132.251.243:26657",
+  "http://212.23.222.183:26657",
+  "http://46.137.227.37:8000",
+  "http://35.78.176.215:26657",
+  "http://162.19.58.101:26657",
+  "http://162.55.97.44:26657",
+  "http://135.181.2.20:36657",
+  "http://23.88.0.170:26657",
+  "http://208.181.131.107:26657",
+  "http://3.217.47.126:26657",
+  "http://135.125.67.229:26657",
+  "http://54.74.229.47:26657",
+  "http://74.118.136.119:26657",
+  "http://54.218.152.11:26657",
+  "http://223.119.49.60:26657",
+  "http://35.78.61.71:26657",
+  "http://134.65.194.142:26657",
+  "http://74.80.183.130:27004",
+  "http://188.40.72.97:26657",
+  "http://89.117.56.203:26657",
+  "http://34.81.39.139:26657",
+  "http://34.195.124.95:26657",
+  "http://52.194.8.37:26657",
+  "http://169.155.168.82:26657",
+  "http://47.75.104.62:26657",
+  "http://95.216.36.141:26657",
+  "http://93.189.30.102:26657",
+  "http://95.217.197.100:27004",
+  "http://185.181.103.140:26657",
+  "http://134.65.192.182:26657",
+  "http://88.198.5.137:26657",
+  "http://157.90.128.50:26657",
+  "http://128.199.3.109:26657",
+  "http://134.65.194.139:26657",
+  "http://86.111.48.95:26657",
+  "http://35.212.211.176:26657",
+  "http://82.217.63.115:26657",
+  "http://82.113.38.40:26657",
+  "http://52.73.168.104:26657",
+  "http://65.108.82.247:26657",
+  "http://169.155.169.137:26657",
+  "http://88.99.30.118:26657",
+  "http://51.79.231.89:26657",
+  "http://85.10.192.155:26657",
+  "http://18.235.35.236:26657",
+  "http://57.128.22.71:26657",
+  "http://51.210.154.21:26657",
+  "http://162.55.3.28:26657",
+  "http://10.254.254.80:26657",
+  "http://95.217.122.252:26657",
+  "http://218.102.97.67:26657",
+  "http://5.9.97.174:26657",
+  "http://3.109.149.102:26657",
+  "http://52.198.63.225:26657",
+  "http://164.152.161.131:26657",
+  "http://162.19.18.115:26657",
+  "http://153.139.245.106:26657",
+  "http://46.4.78.177:26657",
+  "http://37.27.96.181:26641",
+  "http://10.254.254.84:36657",
+  "http://157.90.129.15:26657",
+  "http://135.181.19.45:26657",
+  "http://65.108.35.20:26657",
+  "http://113.99.98.81:26657",
+  "http://51.222.10.128:26657",
+  "http://23.88.66.187:26657",
+  "http://18.183.203.5:26657",
+  "http://65.109.106.164:26657",
+  "http://195.201.63.87:26657",
+  "http://54.199.153.43:26657",
 ]
 
-[default]
-    earliest_block = "0",
-    rpc = "http://185.247.207.13:26657",
-    rpc_status = "unsuccessful",
-    grpc = "185.247.207.13:9090",
-    grpc_status = "unsuccessful",
+successful_grpc_nodes = [
+  "http://103.241.24.66:26657",
+  "http://88.99.30.118:26657",
+  "http://65.108.35.20:26657",
+  "http://167.114.172.227:26657",
+  "http://136.243.82.69:26657",
+  "http://51.222.10.128:26657",
+  "http://157.90.129.15:26657",
+  "http://51.79.231.89:26657",
+  "http://135.181.19.45:26657",
+  "http://164.132.200.52:26657",
+  "http://95.217.122.252:26657",
+  "http://213.246.39.167:26657",
 ]
 
-[default]
-    earliest_block = "0",
-    rpc = "http://84.45.68.62:26657",
-    rpc_status = "unsuccessful",
-    grpc = "84.45.68.62:9090",
-    grpc_status = "unsuccessful",
+unsuccessful_grpc_nodes = [
+  "http://65.109.96.173:26657",
+  "http://54.199.153.43:26657",
+  "http://169.155.168.155:26657",
+  "http://157.90.212.31:26657",
+  "http://169.155.168.82:26657",
+  "http://142.132.205.94:26657",
+  "http://23.88.66.187:26657",
+  "http://18.180.93.129:26657",
+  "http://169.155.46.88:26657",
+  "http://135.181.2.20:36657",
+  "http://213.32.7.59:26657",
+  "http://188.40.72.97:26657",
+  "http://20.31.165.114:26657",
+  "http://103.234.71.245:26657",
+  "http://35.78.61.71:26657",
+  "http://10.133.0.65:26657",
+  "http://5.9.97.174:26657",
+  "http://162.55.97.44:26657",
+  "http://65.108.74.96:26657",
+  "http://136.243.88.91:1421",
+  "http://85.244.128.10:26657",
+  "http://89.117.56.203:26657",
+  "http://65.109.182.72:36657",
+  "http://208.181.131.107:26657",
+  "http://88.198.5.137:26657",
+  "http://141.95.145.63:26657",
+  "http://10.254.254.92:26657",
+  "http://169.155.46.196:26657",
+  "http://54.74.229.47:26657",
+  "http://51.222.11.146:26657",
+  "http://81.183.230.170:26657",
+  "http://10.254.254.80:26657",
+  "http://65.108.209.115:26657",
+  "http://116.202.224.210:26657",
+  "http://57.128.22.71:26657",
+  "http://65.109.93.35:61657",
+  "http://47.75.104.62:26657",
+  "http://47.242.54.248:26657",
+  "http://155.138.150.217:26657",
+  "http://212.23.222.183:26657",
+  "http://173.234.26.146:27004",
+  "http://93.115.25.15:26659",
+  "http://18.183.203.5:26657",
+  "http://162.55.3.28:26657",
+  "http://218.102.97.67:26657",
+  "http://136.243.40.22:26657",
+  "http://168.119.138.109:26657",
+  "http://185.16.39.137:26657",
+  "http://44.214.37.79:26657",
+  "http://65.21.134.243:26673",
+  "http://135.125.67.229:26657",
+  "http://23.88.0.170:26657",
+  "http://95.214.53.215:26657",
+  "http://52.73.168.104:26657",
+  "http://54.229.85.145:26657",
+  "http://89.149.218.60:26657",
+  "http://35.179.76.165:26657",
+  "http://135.125.189.12:26657",
+  "http://88.198.12.91:26657",
+  "http://172.255.98.36:36657",
+  "http://153.139.245.106:26657",
+  "http://15.235.42.151:26668",
+  "http://3.217.47.126:26657",
+  "http://162.19.18.115:26657",
+  "http://195.14.6.2:26657",
+  "http://68.206.160.142:26657",
+  "http://34.249.177.43:26657",
+  "http://80.190.129.50:26657",
+  "http://34.195.124.95:26657",
+  "http://52.194.8.37:26657",
+  "http://103.87.94.132:26657",
+  "http://134.65.192.182:26657",
+  "http://3.109.149.102:26657",
+  "http://65.108.97.229:26657",
+  "http://169.155.44.125:26657",
+  "http://168.119.75.88:26657",
+  "http://74.80.183.130:27004",
+  "http://46.137.227.37:8000",
+  "http://18.235.35.236:26657",
+  "http://65.109.106.164:26657",
+  "http://51.83.238.114:26657",
+  "http://65.108.6.121:26677",
+  "http://135.181.18.206:26657",
+  "http://82.113.38.40:26657",
+  "http://134.65.194.142:26657",
+  "http://35.161.85.155:26657",
+  "http://169.155.169.137:26657",
+  "http://134.65.194.139:26657",
+  "http://95.216.36.141:26657",
+  "http://34.81.39.139:26657",
+  "http://51.210.154.21:26657",
+  "http://113.99.98.81:26657",
+  "https://r-terra--a1f4bb74a50728120e4f8c8054a8bb4c.gw.notionalapi.net:443",
+  "http://148.113.8.138:26657",
+  "http://152.53.21.159:26657",
+  "http://54.199.229.124:26657",
+  "http://3.112.138.57:26657",
+  "http://13.213.121.179:26657",
+  "http://65.21.196.250:26657",
+  "http://128.199.3.109:26657",
+  "http://169.155.47.207:26657",
+  "http://46.4.78.177:26657",
+  "http://185.181.103.140:26657",
+  "http://212.32.245.96:26657",
+  "http://95.217.197.100:27004",
+  "http://65.108.232.150:26657",
+  "http://85.10.192.155:26657",
+  "http://195.201.63.87:26657",
+  "http://35.78.176.215:26657",
+  "http://162.19.58.101:26657",
+  "http://47.251.3.223:26657",
+  "http://93.189.30.102:26657",
+  "http://54.218.152.11:26657",
+  "http://142.132.251.243:26657",
+  "http://34.87.32.135:26657",
+  "http://47.147.226.147:38657",
+  "http://157.90.128.50:26657",
+  "http://88.198.35.12:26657",
+  "http://89.149.218.95:26657",
+  "http://185.16.39.158:26657",
+  "http://23.224.235.122:26657",
+  "http://5.10.19.53:26657",
+  "http://82.217.63.115:26657",
+  "http://20.76.242.200:26657",
+  "http://51.103.108.114:26657",
+  "http://37.27.96.181:26641",
+  "http://164.152.163.83:26657",
+  "http://169.155.45.74:26657",
+  "http://135.181.141.100:26657",
+  "http://74.118.136.119:26657",
+  "http://142.132.193.150:26657",
+  "http://13.209.60.161:26657",
+  "http://86.111.48.95:26657",
+  "http://37.122.252.18:26657",
+  "http://65.108.82.247:26657",
+  "http://52.198.63.225:26657",
+  "http://164.152.161.131:26657",
+  "http://10.254.254.84:36657",
+  "http://178.162.165.203:26657",
+  "http://65.109.92.72:26657",
+  "http://35.212.211.176:26657",
+  "http://223.119.49.60:26657",
 ]
 
-[default]
-    earliest_block = "0",
-    rpc = "http://185.247.207.9:26657",
-    rpc_status = "unsuccessful",
-    grpc = "185.247.207.9:9090",
-    grpc_status = "unsuccessful",
+successful_api_nodes = [
 ]
 
-[default]
-    earliest_block = "0",
-    rpc = "http://185.247.207.14:26657",
-    rpc_status = "unsuccessful",
-    grpc = "185.247.207.14:9090",
-    grpc_status = "unsuccessful",
+unsuccessful_api_nodes = [
 ]
 
-[default]
-    earliest_block = "0",
-    rpc = "http://185.247.207.10:26657",
-    rpc_status = "unsuccessful",
-    grpc = "185.247.207.10:9090",
-    grpc_status = "successful",
-]
-
-[default]
-    earliest_block = "0",
-    rpc = "http://185.247.207.32:26657",
-    rpc_status = "unsuccessful",
-    grpc = "185.247.207.32:9090",
-    grpc_status = "unsuccessful",
-]
-
-[default]
-    earliest_block = "0",
-    rpc = "http://162.55.98.45:26657",
-    rpc_status = "unsuccessful",
-    grpc = "162.55.98.45:9090",
-    grpc_status = "unsuccessful",
-]
-
-[default]
-    earliest_block = "0",
-    rpc = "http://185.247.207.8:26657",
-    rpc_status = "unsuccessful",
-    grpc = "185.247.207.8:9090",
-    grpc_status = "unsuccessful",
-]
-
-[default]
-    earliest_block = "0",
-    rpc = "http://84.45.68.9:26657",
-    rpc_status = "unsuccessful",
-    grpc = "84.45.68.9:9090",
-    grpc_status = "unsuccessful",
-]
-
-[default]
-    earliest_block = "0",
-    rpc = "http://185.247.207.12:26657",
-    rpc_status = "unsuccessful",
-    grpc = "185.247.207.12:9090",
-    grpc_status = "unsuccessful",
-]
-
-[default]
-    earliest_block = "0",
-    rpc = "http://93.151.164.241:26657",
-    rpc_status = "unsuccessful",
-    grpc = "93.151.164.241:9090",
-    grpc_status = "unsuccessful",
-]
-
-[default]
-    earliest_block = "0",
-    rpc = "http://34.66.10.69:26657",
-    rpc_status = "unsuccessful",
-    grpc = "34.66.10.69:9090",
-    grpc_status = "unsuccessful",
-]
-
-[default]
-    earliest_block = "0",
-    rpc = "http://195.3.220.52:26657",
-    rpc_status = "unsuccessful",
-    grpc = "195.3.220.52:9090",
-    grpc_status = "unsuccessful",
-]
-
-[default]
-    earliest_block = "0",
-    rpc = "http://62.31.255.182:26657",
-    rpc_status = "unsuccessful",
-    grpc = "62.31.255.182:9090",
-    grpc_status = "unsuccessful",
-]
-
-[default]
-    earliest_block = "0",
-    rpc = "http://86.27.197.205:26657",
-    rpc_status = "unsuccessful",
-    grpc = "86.27.197.205:9090",
-    grpc_status = "unsuccessful",
-]
-
-[Mercury]
-    earliest_block = "3603400",
-    rpc = "http://23.88.103.131:26657",
-    rpc_status = "successful",
-    grpc = "23.88.103.131:9090",
-    grpc_status = "successful",
-]
-
-[default]
-    earliest_block = "0",
-    rpc = "http://34.140.73.204:26657",
-    rpc_status = "unsuccessful",
-    grpc = "34.140.73.204:9090",
-    grpc_status = "unsuccessful",
-]
-
-[default]
-    earliest_block = "0",
-    rpc = "http://62.31.255.181:26657",
-    rpc_status = "unsuccessful",
-    grpc = "62.31.255.181:9090",
-    grpc_status = "unsuccessful",
-]
-
-[default]
-    earliest_block = "0",
-    rpc = "http://185.247.207.11:26657",
-    rpc_status = "unsuccessful",
-    grpc = "185.247.207.11:9090",
-    grpc_status = "unsuccessful",
-]
-
-successfulRPCNodes = [
-    http://23.88.103.131:26657
-    http://34.121.154.165:26657
-]
-unsuccessfulRPCNodes = [
-    http://185.247.207.11:26657
-    http://34.140.73.204:26657
-    http://62.31.255.181:26657
-    http://185.247.207.17:26657
-    http://185.247.207.13:26657
-    http://185.247.207.8:26657
-    http://84.45.68.9:26657
-    http://84.45.68.62:26657
-    http://185.247.207.9:26657
-    http://185.247.207.14:26657
-    http://185.247.207.10:26657
-    http://185.247.207.32:26657
-    http://162.55.98.45:26657
-    http://185.247.207.12:26657
-    http://93.151.164.241:26657
-    http://86.27.197.205:26657
-    http://34.66.10.69:26657
-    http://195.3.220.52:26657
-    http://62.31.255.182:26657
-]
-successfulGRPCNodes = [
-    http://185.247.207.10:26657
-    http://34.121.154.165:26657
-    http://23.88.103.131:26657
-]
-unsuccessfulGRPCNodes = [
-    http://195.3.220.52:26657
-    http://34.140.73.204:26657
-    http://185.247.207.8:26657
-    http://185.247.207.13:26657
-    http://185.247.207.12:26657
-    http://185.247.207.14:26657
-    http://162.55.98.45:26657
-    http://185.247.207.32:26657
-    http://185.247.207.9:26657
-    http://62.31.255.182:26657
-    http://62.31.255.181:26657
-    http://86.27.197.205:26657
-    http://185.247.207.11:26657
-    http://93.151.164.241:26657
-    http://84.45.68.9:26657
-    http://84.45.68.62:26657
-    http://185.247.207.17:26657
-    http://34.66.10.69:26657
-]
-successfulAPINodes = [
-]
-unsuccessfulAPINodes = [
-]
