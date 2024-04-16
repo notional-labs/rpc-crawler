@@ -23,9 +23,7 @@ func CheckNode(nodeAddr string) {
 	if IsNodeVisited(nodeAddr) {
 		return
 	}
-
 	MarkNodeAsVisited(nodeAddr)
-
 	// Check if the node is the initial node
 	if initialNode == "" {
 		earliestBlock = map[string]int{}
@@ -41,7 +39,6 @@ func CheckNode(nodeAddr string) {
 			return
 		}
 		ctx := context.TODO()
-
 		status, err := client.Status(ctx)
 		if err != nil {
 			fmt.Println("cannot fetch status")
@@ -49,41 +46,33 @@ func CheckNode(nodeAddr string) {
 		initialChainID = status.NodeInfo.Network
 		moniker[nodeAddr] = status.NodeInfo.Moniker
 	}
-
 	// Skip if the node address is localhost and it's not the initial node
 	if nodeAddr != initialNode && strings.Contains(nodeAddr, "localhost") {
 		return
 	}
-
 	// Increment total nodes
 	totalNodesChecked++
-
 	client, err := FetchClient(nodeAddr)
 	if err != nil {
 		fmt.Println("Failed to fetch status from", nodeAddr)
 		return
 	}
-
 	netinfo, err := FetchNetInfo(client)
 	if err == nil {
 		fmt.Println("Got net info from", nodeAddr)
 		CheckNodeGRPC(nodeAddr)
-
 		ctx := context.TODO()
-
 		status, err := client.Status(ctx)
 		moniker[nodeAddr] = status.NodeInfo.Moniker
 		if err != nil {
 			fmt.Println("Failed to fetch client from", nodeAddr)
 			return
 		}
-
 		// Verify chain_id
 		if status.NodeInfo.Network != initialChainID {
 			fmt.Println("Node", nodeAddr, "is on a different chain_id")
 			return
 		}
-
 		// Add to successful nodes
 		earliestBlock[nodeAddr] = int(status.SyncInfo.EarliestBlockHeight)
 		rpcAddr[nodeAddr] = true
@@ -91,7 +80,6 @@ func CheckNode(nodeAddr string) {
 		if int(status.SyncInfo.EarliestBlockHeight) == 1 {
 			archiveNodes[nodeAddr] = true
 		}
-
 	} else {
 		fmt.Println("Failed to fetch net_info from", nodeAddr)
 		CheckNodeGRPC(nodeAddr)
@@ -100,7 +88,6 @@ func CheckNode(nodeAddr string) {
 		return
 	}
 	for _, peer := range netinfo.Peers {
-
 		peer := peer
 		ProcessPeer(peer)
 	}
@@ -113,12 +100,10 @@ func CheckNodeGRPC(nodeAddr string) {
 	err := FetchNodeInfoGRPC(nodeAddrGRPC)
 	if err == nil {
 		fmt.Println("Got node info GRPC from", nodeAddrGRPC)
-
 		// Add to successful nodes
 		grpcAddr[nodeAddr] = true
 	} else {
 		fmt.Println("Failed to fetch node info GRPC from", nodeAddrGRPC)
-
 		// Add to unsuccessful nodes
 		grpcAddr[nodeAddr] = false
 	}

@@ -10,10 +10,9 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
-	"github.com/cosmos/cosmos-sdk/client/grpc/tmservice"
-
 	"github.com/cometbft/cometbft/rpc/client/http"
 	coretypes "github.com/cometbft/cometbft/rpc/core/types"
+	"github.com/cosmos/cosmos-sdk/client/grpc/tmservice"
 )
 
 var visited = struct {
@@ -26,14 +25,12 @@ func FetchClient(nodeAddr string) (client *http.HTTP, err error) {
 	if err != nil {
 		return nil, err
 	}
-
 	return client, err
 }
 
 func BuildRPCAddress(peer coretypes.Peer) string {
 	rpcAddr := peer.NodeInfo.Other.RPCAddress
 	rpcAddr = strings.TrimPrefix(rpcAddr, "tcp://")
-
 	if len(rpcAddr) >= 9 && (rpcAddr[:9] == "0.0.0.0:" || rpcAddr[:9] == "127.0.0.1:") {
 		rpcAddr = peer.RemoteIP + rpcAddr[8:]
 	}
@@ -44,41 +41,39 @@ func WriteSectionToToml(file *os.File, nodeAddr string) {
 	nodeAddrGRPC := strings.Replace(nodeAddr, "26657", "9090", 1)
 	nodeAddrGRPC = strings.Replace(nodeAddrGRPC, "http://", "", 1)
 	nodeAddrGRPC = strings.Replace(nodeAddrGRPC, "https://", "", 1)
-
 	sectionName, ok := moniker[nodeAddr]
 	if !ok || sectionName == "" {
 		sectionName = "default"
 	}
-
-	_, err := file.WriteString(fmt.Sprintf("[%s]\n", sectionName))
+	_, err := file.WriteString(fmt.Sprintf("[[nodes]]\n"))
 	if err != nil {
 		fmt.Println("cannot write section to toml file")
 	}
-
-	_, err = file.WriteString(fmt.Sprintf("    earliest_block = \"%d\",\n", earliestBlock[nodeAddr]))
+	_, err = file.WriteString(fmt.Sprintf("name = \"%s\"\n", sectionName))
+	if err != nil {
+		fmt.Println("cannot write section to toml file")
+	}
+	_, err = file.WriteString(fmt.Sprintf("earliest_block = %d\n", earliestBlock[nodeAddr]))
 	if err != nil {
 		fmt.Println("cannot write node to toml file")
 	}
-
 	writeStatus := func(service string, addr string, statusMap map[string]bool) {
 		status := "unsuccessful"
 		if statusMap[nodeAddr] {
 			status = "successful"
 		}
-		_, err = file.WriteString(fmt.Sprintf("    %s = \"%s\",\n", service, addr))
+		_, err = file.WriteString(fmt.Sprintf("%s = \"%s\"\n", service, addr))
 		if err != nil {
 			fmt.Println("cannot write node to toml file")
 		}
-		_, err = file.WriteString(fmt.Sprintf("    %s_status = \"%s\",\n", service, status))
+		_, err = file.WriteString(fmt.Sprintf("%s_status = \"%s\"\n", service, status))
 		if err != nil {
 			fmt.Println("cannot write node to toml file")
 		}
 	}
-
 	writeStatus("rpc", nodeAddr, rpcAddr)
 	writeStatus("grpc", nodeAddrGRPC, grpcAddr)
-
-	_, err = file.WriteString("]\n\n")
+	_, err = file.WriteString("\n")
 	if err != nil {
 		fmt.Println("cannot write escape sequence to toml file")
 	}
@@ -88,7 +83,6 @@ func ProcessPeer(peer coretypes.Peer) {
 	rpcAddr := BuildRPCAddress(peer)
 	rpcAddr = NormalizeAddressWithRemoteIP(rpcAddr, peer.RemoteIP)
 	CheckNode("http://" + rpcAddr)
-
 	// Fetch network info
 	client, err := FetchClient("http://" + rpcAddr)
 	if err != nil {
@@ -100,7 +94,6 @@ func ProcessPeer(peer coretypes.Peer) {
 		//		fmt.Println("Error fetching network info:", err)
 		return
 	}
-
 	// Process each peer
 	for _, peer := range netInfo.Peers {
 		go func(peer coretypes.Peer) {
@@ -120,20 +113,16 @@ func FetchNodeInfoGRPC(nodeAddr string) error {
 	if err != nil {
 		return err
 	}
-
 	defer grpcConn.Close()
-
 	serviceClient := tmservice.NewServiceClient(grpcConn)
 	_, err = serviceClient.GetNodeInfo(
 		context.Background(),
 		&tmservice.GetNodeInfoRequest{},
 	)
-
 	if err != nil {
 		fmt.Println(err)
 		return err
 	}
-
 	return err
 }
 
@@ -169,30 +158,25 @@ func WriteNodesToToml(initialNode string) {
 		return
 	}
 	defer file.Close()
-
 	// Write the source node to the file
-	_, err = file.WriteString(fmt.Sprintf("[sourceNode]\nnode = \"%s\"\n\n", initialNode))
+	_, err = file.WriteString(fmt.Sprintf("source_node = \"%s\"\n\n", initialNode))
 	if err != nil {
 		fmt.Println("cannot write source node to toml file")
 	}
-
-	_, err = file.WriteString(fmt.Sprintf("totalNodesChecked = %d\n\n", totalNodesChecked))
+	_, err = file.WriteString(fmt.Sprintf("total_nodes_checked = %d\n\n", totalNodesChecked))
 	if err != nil {
 		fmt.Println("cannot write node to toml file")
 	}
-
 	// Write sections to the file
 	for key := range rpcAddr {
 		WriteSectionToToml(file, key)
 	}
-
-	WriteSectionToTomlSlice(file, "successfulRPCNodes", rpcAddr, true)
-	WriteSectionToTomlSlice(file, "unsuccessfulRPCNodes", rpcAddr, false)
-	WriteSectionToTomlSlice(file, "successfulGRPCNodes", grpcAddr, true)
-	WriteSectionToTomlSlice(file, "unsuccessfulGRPCNodes", grpcAddr, false)
-	WriteSectionToTomlSlice(file, "successfulAPINodes", apiAddr, true)
-	WriteSectionToTomlSlice(file, "unsuccessfulAPINodes", apiAddr, false)
-
+	WriteSectionToTomlSlice(file, "successful_rpc_nodes", rpcAddr, true)
+	WriteSectionToTomlSlice(file, "unsuccessful_rpc_nodes", rpcAddr, false)
+	WriteSectionToTomlSlice(file, "successful_grpc_nodes", grpcAddr, true)
+	WriteSectionToTomlSlice(file, "unsuccessful_grpc_nodes", grpcAddr, false)
+	WriteSectionToTomlSlice(file, "successful_api_nodes", apiAddr, true)
+	WriteSectionToTomlSlice(file, "unsuccessful_api_nodes", apiAddr, false)
 	fmt.Println(".toml file created with node details.")
 }
 
@@ -201,17 +185,15 @@ func WriteSectionToTomlSlice(file *os.File, sectionName string, nodes map[string
 	if err != nil {
 		fmt.Println("cannot write node to toml file")
 	}
-
 	for key, val := range nodes {
 		if val == status {
-			_, err = file.WriteString(fmt.Sprintf("    %s\n", key))
+			_, err = file.WriteString(fmt.Sprintf("  \"%s\",\n", key))
 			if err != nil {
 				fmt.Println("cannot write node to toml file")
 			}
 		}
 	}
-
-	_, err = file.WriteString("]\n")
+	_, err = file.WriteString("]\n\n")
 	if err != nil {
 		fmt.Println("cannot write node to toml file")
 	}

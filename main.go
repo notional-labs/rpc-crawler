@@ -11,7 +11,6 @@ func main() {
 	if len(os.Args) > 1 {
 		initialNode = os.Args[1]
 	}
-
 	lib.CheckNode(initialNode)
 	lib.WriteNodesToToml(initialNode)
 }
