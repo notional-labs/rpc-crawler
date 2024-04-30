@@ -12,15 +12,21 @@ import (
 
 var (
 	earliestBlock     map[string]int
+	earliestBlockMu   sync.RWMutex
 	rpcAddr           map[string]bool
+	rpcAddrMu         sync.RWMutex
 	grpcAddr          map[string]bool
+	grpcAddrMu        sync.RWMutex
 	apiAddr           map[string]bool
+	apiAddrMu         sync.RWMutex
 	moniker           map[string]string
+	monikerMu         sync.RWMutex
 	initialNode       string
 	nodeAddrGRPC      string
 	totalNodesChecked int
 	initialChainID    string
 	archiveNodes      map[string]bool
+	archiveNodesMu    sync.RWMutex
 )
 
 func CheckNode(nodeAddr string) {
@@ -30,22 +36,50 @@ func CheckNode(nodeAddr string) {
 	MarkNodeAsVisited(nodeAddr)
 	// Check if the node is the initial node
 	if initialNode == "" {
+		earliestBlockMu.Lock()
 		earliestBlock = map[string]int{}
+		earliestBlockMu.Unlock()
+
+		rpcAddrMu.Lock()
 		rpcAddr = map[string]bool{}
+		rpcAddrMu.Unlock()
+
+		grpcAddrMu.Lock()
 		grpcAddr = map[string]bool{}
+		grpcAddrMu.Unlock()
+
+		apiAddrMu.Lock()
 		apiAddr = map[string]bool{}
+		apiAddrMu.Unlock()
+
+		archiveNodesMu.Lock()
 		archiveNodes = map[string]bool{}
+		archiveNodesMu.Unlock()
+
+		monikerMu.Lock()
 		moniker = map[string]string{}
+		monikerMu.Unlock()
+
 		initialNode = nodeAddr
 		client, err := FetchClient(nodeAddr)
 		if err != nil {
 			color.Red("[%s] Failed to fetch status from %s\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddr)
 			return
 		}
+		if client == nil {
+			color.Red("[%s] Client is nil for %s\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddr)
+			return
+		}
+
 		ctx := context.TODO()
 		status, err := client.Status(ctx)
 		if err != nil {
 			color.Red("[%s] cannot fetch status\n", time.Now().Format("2006-01-02 15:04:05"))
+			return
+		}
+		if status == nil {
+			color.Red("[%s] Status is nil for %s\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddr)
+			return
 		}
 		initialChainID = status.NodeInfo.Network
 		moniker[nodeAddr] = status.NodeInfo.Moniker
@@ -61,6 +95,10 @@ func CheckNode(nodeAddr string) {
 		color.Red("[%s] Failed to fetch status from %s\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddr)
 		return
 	}
+	if client == nil {
+		color.Red("[%s] Client is nil for %s\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddr)
+		return
+	}
 	netinfo, err := FetchNetInfo(client)
 	if err == nil {
 		color.Green("[%s] Got net info from %s\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddr)
@@ -70,6 +108,10 @@ func CheckNode(nodeAddr string) {
 		moniker[nodeAddr] = status.NodeInfo.Moniker
 		if err != nil {
 			color.Red("[%s] Failed to fetch client from %s\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddr)
+			return
+		}
+		if status == nil {
+			color.Red("[%s] Status is nil for %s\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddr)
 			return
 		}
 		// Verify chain_id
