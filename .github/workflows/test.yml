@@ -22,5 +22,5 @@ jobs:
       - uses: actions/setup-go@v4
         with:
           go-version: 1.22.x
-      - run: go build ./...
-      - run: ./rpc-crawler https://rpc-cosmoshub.goldenratiostaking.net:443
+      - run: go install ./...
+      - run: rpc-crawler https://rpc-cosmoshub.goldenratiostaking.net:443
