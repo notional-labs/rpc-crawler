@@ -30,6 +30,16 @@ var (
 )
 
 func CheckNode(nodeAddr string) {
+	rpcAddrMu.Lock()
+	defer rpcAddrMu.Unlock()
+
+	if _, exists := rpcAddr[nodeAddr]; exists {
+		return // Node already processed
+	}
+
+	// Proceed with processing
+	rpcAddr[nodeAddr] = true
+
 	if IsNodeVisited(nodeAddr) {
 		return
 	}
@@ -102,10 +112,9 @@ func CheckNode(nodeAddr string) {
 	netinfo, err := FetchNetInfo(client)
 	if err == nil {
 		color.Green("[%s] Got net info from %s\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddr)
-		CheckNodeGRPC(nodeAddr)
+		//		CheckNodeGRPC(nodeAddr)
 		ctx := context.TODO()
 		status, err := client.Status(ctx)
-		moniker[nodeAddr] = status.NodeInfo.Moniker
 		if err != nil {
 			color.Red("[%s] Failed to fetch client from %s\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddr)
 			return
@@ -114,6 +123,8 @@ func CheckNode(nodeAddr string) {
 			color.Red("[%s] Status is nil for %s\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddr)
 			return
 		}
+		moniker[nodeAddr] = status.NodeInfo.Moniker
+
 		// Verify chain_id
 		if status.NodeInfo.Network != initialChainID {
 			color.Red("[%s] Node %s is on a different chain_id\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddr)
@@ -137,25 +148,25 @@ func CheckNode(nodeAddr string) {
 		wg.Wait()
 	} else {
 		color.Red("[%s] Failed to fetch net_info from %s\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddr)
-		CheckNodeGRPC(nodeAddr)
+		//		CheckNodeGRPC(nodeAddr)
 		// Add to unsuccessful nodes
 		rpcAddr[nodeAddr] = false
 		return
 	}
 }
 
-func CheckNodeGRPC(nodeAddr string) {
-	nodeAddrGRPC = strings.Replace(nodeAddr, "26657", "9090", 1)
-	nodeAddrGRPC = strings.Replace(nodeAddrGRPC, "http://", "", 1)
-	nodeAddrGRPC = strings.Replace(nodeAddrGRPC, "https://", "", 1)
-	err := FetchNodeInfoGRPC(nodeAddrGRPC)
-	if err == nil {
-		color.Green("[%s] Got node info GRPC from %s\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddrGRPC)
-		// Add to successful nodes
-		grpcAddr[nodeAddr] = true
-	} else {
-		color.Red("[%s] Failed to fetch node info GRPC from %s\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddrGRPC)
-		// Add to unsuccessful nodes
-		grpcAddr[nodeAddr] = false
-	}
-}
+// func CheckNodeGRPC(nodeAddr string) {
+// 	nodeAddrGRPC = strings.Replace(nodeAddr, "26657", "9090", 1)
+// 	nodeAddrGRPC = strings.Replace(nodeAddrGRPC, "http://", "", 1)
+// 	nodeAddrGRPC = strings.Replace(nodeAddrGRPC, "https://", "", 1)
+// 	err := FetchNodeInfoGRPC(nodeAddrGRPC)
+// 	if err == nil {
+// 		color.Green("[%s] Got node info GRPC from %s\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddrGRPC)
+// 		// Add to successful nodes
+// 		grpcAddr[nodeAddr] = true
+// 	} else {
+// 		color.Red("[%s] Failed to fetch node info GRPC from %s\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddrGRPC)
+// 		// Add to unsuccessful nodes
+// 		grpcAddr[nodeAddr] = false
+// 	}
+// }
