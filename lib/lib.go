@@ -88,28 +88,28 @@ func ProcessPeer(peer coretypes.Peer) {
 }
 
 func FetchNodeInfoGRPC(nodeAddr string) error {
-	grpcConn, err := grpc.Dial(
-		nodeAddr,
-		grpc.WithTransportCredentials(insecure.NewCredentials()),
-	)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	grpcConn, err := grpc.DialContext(ctx, nodeAddr, grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithBlock())
 	if err != nil {
 		return err
 	}
 	defer grpcConn.Close()
+
 	serviceClient := tmservice.NewServiceClient(grpcConn)
-	_, err = serviceClient.GetNodeInfo(
-		context.Background(),
-		&tmservice.GetNodeInfoRequest{},
-	)
+	_, err = serviceClient.GetNodeInfo(ctx, &tmservice.GetNodeInfoRequest{})
 	if err != nil {
 		color.Red("[%s] %v\n", time.Now().Format("2006-01-02 15:04:05"), err)
 		return err
 	}
-	return err
+	return nil
 }
 
 func FetchNetInfo(client *http.HTTP) (*coretypes.ResultNetInfo, error) {
-	ctx := context.Background()
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
 	netinfo, err := client.NetInfo(ctx)
 	return netinfo, err
 }
