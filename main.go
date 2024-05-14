@@ -14,7 +14,9 @@ import (
 )
 
 var (
-	visited = struct {
+	uniquePeers   map[string]bool
+	uniquePeersMu sync.RWMutex
+	visited       = struct {
 		sync.RWMutex
 		nodes map[string]bool
 	}{nodes: make(map[string]bool)}
@@ -37,6 +39,10 @@ func main() {
 		initialNodes = strings.Split(os.Args[1], " ")
 	}
 
+	uniquePeersMu.Lock()
+	uniquePeers = make(map[string]bool)
+	uniquePeersMu.Unlock()
+
 	start := time.Now()
 	color.Green("[%s] Starting RPC crawler...\n", start.Format("2006-01-02 15:04:05"))
 
@@ -45,7 +51,7 @@ func main() {
 	}
 
 	// Wait for all goroutines to finish
-	time.Sleep(180 * time.Second)
+	time.Sleep(60 * time.Second)
 
 	elapsed := time.Since(start)
 	color.Green("[%s] RPC crawler completed in %s\n", time.Now().Format("2006-01-02 15:04:05"), elapsed)
@@ -142,7 +148,23 @@ func CheckNode(nodeAddr string) {
 	}
 	netinfo, err := FetchNetInfo(client)
 	if err == nil {
-		color.Green("[%s] Got net info from %s\n", time.Now().Format("2006-01-02 15:04:05"), nodeAddr)
+		newPeers := 0
+		for _, peer := range netinfo.Peers {
+			rpcAddr := BuildRPCAddress(peer)
+			rpcAddr = NormalizeAddressWithRemoteIP(rpcAddr, peer.RemoteIP)
+			uniquePeersMu.Lock()
+			if !uniquePeers[rpcAddr] {
+				uniquePeers[rpcAddr] = true
+				newPeers++
+			}
+			uniquePeersMu.Unlock()
+		}
+		uniquePeersMu.RLock()
+		totalUniquePeers := len(uniquePeers)
+		uniquePeersMu.RUnlock()
+		color.Green("[%s] Got net info from %s with %d peers, and %d new peers for a total of %d unique peers in the network\n",
+			time.Now().Format("2006-01-02 15:04:05"), nodeAddr, len(netinfo.Peers), newPeers, totalUniquePeers)
+
 		ctx := context.TODO()
 		status, err := client.Status(ctx)
 		moniker[nodeAddr] = status.NodeInfo.Moniker
@@ -239,9 +261,33 @@ func WriteSectionToToml(file *os.File, nodeAddr string) {
 }
 
 func ProcessPeer(peer coretypes.Peer) {
+	commonRPCPorts := []string{
+		"26657",
+		"36657",
+		"22257",
+		"14657",
+		"58657",
+		"33657",
+		"53657",
+		"37657",
+		"31657",
+		"10157",
+		"27957",
+		"2401",
+		"15957",
+	}
 	rpcAddr := BuildRPCAddress(peer)
 	rpcAddr = NormalizeAddressWithRemoteIP(rpcAddr, peer.RemoteIP)
-	CheckNode("http://" + rpcAddr)
+
+	// Extract the IP address and port from the rpcAddr
+	parts := strings.Split(rpcAddr, ":")
+	ipAddr := parts[0]
+
+	// Iterate through common RPC ports and check each port
+	for _, port := range commonRPCPorts {
+		nodeAddr := fmt.Sprintf("%s:%s", ipAddr, port)
+		CheckNode("http://" + nodeAddr)
+	}
 }
 
 func FetchNetInfo(client *http.HTTP) (*coretypes.ResultNetInfo, error) {
@@ -285,12 +331,7 @@ func WriteNodesToToml(initialNode string) {
 	if err != nil {
 		color.Red("[%s] cannot write node to toml file\n", time.Now().Format("2006-01-02 15:04:05"))
 	}
-	// Write sections to the file
-	for key := range rpcAddr {
-		WriteSectionToToml(file, key)
-	}
 	WriteSectionToTomlSlice(file, "successful_rpc_nodes", rpcAddr, true)
-	WriteSectionToTomlSlice(file, "unsuccessful_rpc_nodes", rpcAddr, false)
 	color.Green("[%s] .toml file created with node details.\n", time.Now().Format("2006-01-02 15:04:05"))
 }
 
